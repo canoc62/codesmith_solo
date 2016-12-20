@@ -9,6 +9,7 @@ const routes = (
   <Route path='/' component={App}>
     <IndexRoute component={Home}></IndexRoute>
     <Route path='/signup' component={Signup}></Route>
+    <Route path='/profile' component={Profile}></Route>
     <Route path='/profile/:userid' component={Profile}></Route>
   </Route>
 );
