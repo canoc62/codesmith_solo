@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import UserForm from './UserForm';
+import LoginForm from './LoginForm';
 
 export default class Home extends Component {
   render() {
     return (
       <div>
         Home
-        <UserForm />
+        <LoginForm />
       </div>
     )
   }

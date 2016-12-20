@@ -29,14 +29,18 @@ const User = db.define('user', {
   }
 });
 
-User.sync().then(() => {
-  const testData = {
-    username: 'another_user',
-    password: 'password'
-  }
+// User.sync().then(() => {
+//   const testData = {
+//     username: 'another_user',
+//     password: 'password'
+//   }
 
-  User.create(testData).then((data) => {
-    console.dir(data.get());
-  });
-});
+//   User.create(testData).then((data) => {
+//     console.dir(data.get());
+//   });
+// });
+
+module.exports = {
+  User: User
+}
 
