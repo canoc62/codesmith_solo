@@ -28,24 +28,26 @@ export default class StatTable extends Component {
 
     return (
       <table>
-        <tr>
-          <th>
-            Game
-          </th>
-          <th>
-            Targets
-          </th>
-          <th>
-            Catches Allowed
-          </th>
-          <th>
-            Yards Allowed
-          </th>
-          <th>
-            TD Given Up
-          </th>
-        </tr>
-        { statRows }
+        <tbody>
+          <tr>
+            <th>
+              Game
+            </th>
+            <th>
+              Targets
+            </th>
+            <th>
+              Completions Allowed
+            </th>
+            <th>
+              Yards Allowed
+            </th>
+            <th>
+              TD Given Up
+            </th>
+          </tr>
+          { statRows }
+        </tbody>
       </table>
     );
   }

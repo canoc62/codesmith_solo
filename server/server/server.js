@@ -16,6 +16,23 @@ app.get('*', (req, res) => {
   res.status(200).sendFile(path.resolve(__dirname + './../../src/static/index.html'));
 });
 
+app.get('/player-stats', (req, res) => {
+ 
+  console.log('REQ TO DATABASE', req);
+  Game.findAll({
+      where: {
+        userId: null
+      }
+    })
+    .then((result) => {
+      console.log('result for Game.findOne:', result);
+      //this.setState({ statsPerGame: result });
+      res.send(result); //return res.send(result);
+    });
+
+    res.end();
+});
+
 app.post('/', (req, res) => {
   console.log('req: ', req.body);
   User.findOne({

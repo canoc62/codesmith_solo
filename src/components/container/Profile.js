@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import gravatar from 'gravatar';
 import StatTable from './StatTable';
-//import Game from './../../../server/db/postgres';
+import axios from 'axios';
 
 export default class Profile extends Component {
   constructor(props) {
@@ -16,16 +15,12 @@ export default class Profile extends Component {
   }
   componentDidMount() {
     this.setState({ profilePhotoLink: gravatar.url('canoc4262@gmail.com', {s: '350', r: 'g', d: '404'}) });
-   
-    // Game.findAll({
-    //   where: {
-    //     userId: null
-    //   }
-    // })
-    // .then((result) => {
-    //   //console.log('result for Game.findOne:', result);
-    //   this.setState({ statsPerGame: result });
-    // });
+
+    axios.get('http://localhost:8080/player-stats')
+      .then((response) => {
+        console.log('response from GET to database', response);
+        this.setState({ statsPerGame: response })
+      });
   }
   render() {
     return (
@@ -33,7 +28,7 @@ export default class Profile extends Component {
         Profile
         <p>User Id: {this.state.userid}</p>
         <img src={this.state.profilePhotoLink} />
-        <StatTable statsPerGame={this.state.stats}/>
+        <StatTable statsPerGame={this.state.statsPerGame}/>
       </div>
     )
   }
