@@ -4,6 +4,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const User = require('./../db/postgres').User;
+const Game = require('./../db/postgres').Game;
 
 app.use(express.static(__dirname + './../../src/static'));
 app.use(cookieParser());
@@ -32,18 +33,35 @@ app.post('/', (req, res) => {
 app.post('/signup', (req, res) => {
   console.log('req body', req.body);
   User.sync().then(() => {
-  const testData = {
-    username: req.body.username,
-    password: req.body.password
-  }
+    const testData = {
+      username: req.body.username,
+      password: req.body.password
+    }
 
-  User.create(testData).then((data) => {
-    console.dir(data.get());
-  });
+    User.create(testData).then((data) => {
+      console.dir(data.get());
+    });
 });
   //console.log('res body', res);
   //console.log('POST at home');
   res.end();
+});
+
+app.post('/create-game', (req, res) => {
+
+  Game.sync().then(() => {
+    const gameData = {
+      opponent: req.body.opponent,
+      targets: req.body.targets,
+      completionsAllowed: req.body.completionsAllowed,
+      yardsAllowed: req.body.yardsAllowed,
+      tdsGivenUp: req.body.tdsGivenUp
+    }
+
+    Game.create(gameData).then((data) => {
+      console.dir(data.get());
+    });
+  });
 });
 
 app.listen(8080);

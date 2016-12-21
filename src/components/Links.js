@@ -8,6 +8,7 @@ export default class Links extends Component {
         <Link to='/'>Home</Link>
         <Link to='/signup'>Sign Up</Link>
         <Link to='/profile'>Profile</Link>
+        <Link to='/create-game'>Add Game</Link>
       </nav>
     )
   }
