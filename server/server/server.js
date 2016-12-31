@@ -30,7 +30,7 @@ app.get('/player-stats', (req, res) => {
       res.send(result); //return res.send(result);
     });
 
-    res.end();
+    //res.end();
 });
 
 app.post('/', (req, res) => {

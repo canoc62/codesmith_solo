@@ -58,4 +58,3 @@ module.exports = {
   User: User,
   Game: Game
 }
-
