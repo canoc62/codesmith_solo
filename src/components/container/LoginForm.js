@@ -12,11 +12,17 @@ export default class LoginForm extends Component {
     }
     this.handleClick = this.handleClick.bind(this);
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
+    this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
   }
   handleUsernameChange(e) {
     this.setState({
       username: e.target.value
+    });
+  }
+  handleEmailChange(e) {
+    this.setState({
+      email: e.target.value
     });
   }
   handlePasswordChange(e) {
@@ -29,9 +35,10 @@ export default class LoginForm extends Component {
     console.log('this.state: ', this.state);
     axios({
       method: 'post',
-      url: '/', 
+      url: '/login', 
       data: {
       username: this.state.username, 
+      email: this.state.email,
       password: this.state.password 
     }})
       .then((res) => {console.log('res', res)})
@@ -42,9 +49,11 @@ export default class LoginForm extends Component {
     return (
       <AuthForm 
         username={ this.state.username }
+        email={ this.state.email }
         password={ this.state.password }
         handleClick={ this.handleClick }
         handleUsernameChange={ this.handleUsernameChange }
+        handleEmailChange={ this.handleEmailChange }
         handlePasswordChange={ this.handlePasswordChange }
         btnText={'Log In'}
       />

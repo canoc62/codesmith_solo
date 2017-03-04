@@ -1,4 +1,7 @@
 const Sequelize = require('sequelize');
+const bcrypt = require('bcryptjs');
+
+const SALT_WORK_FACTOR = 10;
 
 const db = new Sequelize('cs_solo_test', 'canoc', 'football', {
    //change database to cs_solo instead of cs_solo_test once test is good
@@ -22,11 +25,45 @@ const User = db.define('user', {
     autoIncrement: true
   },
   username: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    unique: true
+  },
+  email: {
+    type: Sequelize.STRING,
+    unique: true
   },
   password: {
     type: Sequelize.STRING
   }
+}
+// , {
+//   hooks: {
+//     beforeCreate: function(user) {
+//       bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
+//         if (err) return err;
+//         bcrypt.hash(user.password, salt, (err, hash) => {
+//           user.set('password', hash);
+//         }) 
+//       });
+//     }
+//   }  
+// }
+);
+User.beforeCreate(function(user, options, callback) {
+  user.email = user.email.toLowerCase();
+
+  return bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
+    if (err) return err;
+    bcrypt.hash(user.get('password'), salt, (err, hash) => {
+      //user.set('password', hash);
+      if (err) console.log('HASH ERROR');
+      // console.log('HASH:', hash);
+      user.password = hash;
+      // console.log('USER.PASSWORD', user.password);
+      // console.log('USER', user);
+      return callback(null, options);
+    }); 
+  });
 });
 
 const Game = db.define('game', {

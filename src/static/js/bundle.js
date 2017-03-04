@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f9f41dda12a89b00ea47"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8de29b496a3edf639abd"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -26945,6 +26945,10 @@
 
 	var _Profile2 = _interopRequireDefault(_Profile);
 
+	var _CreateGame = __webpack_require__(275);
+
+	var _CreateGame2 = _interopRequireDefault(_CreateGame);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var routes = _react2.default.createElement(
@@ -26953,7 +26957,8 @@
 	  _react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: '/signup', component: _Signup2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: '/profile', component: _Profile2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: '/profile/:userid', component: _Profile2.default })
+	  _react2.default.createElement(_reactRouter.Route, { path: '/profile/:userid', component: _Profile2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: '/create-game', component: _CreateGame2.default })
 	);
 
 	exports.default = routes;
@@ -27072,6 +27077,11 @@
 	          _reactRouter.Link,
 	          { to: '/profile' },
 	          'Profile'
+	        ),
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: '/create-game' },
+	          'Add Game'
 	        )
 	      );
 	    }
@@ -27182,6 +27192,7 @@
 	    };
 	    _this.handleClick = _this.handleClick.bind(_this);
 	    _this.handleUsernameChange = _this.handleUsernameChange.bind(_this);
+	    _this.handleEmailChange = _this.handleEmailChange.bind(_this);
 	    _this.handlePasswordChange = _this.handlePasswordChange.bind(_this);
 	    return _this;
 	  }
@@ -27191,6 +27202,13 @@
 	    value: function handleUsernameChange(e) {
 	      this.setState({
 	        username: e.target.value
+	      });
+	    }
+	  }, {
+	    key: 'handleEmailChange',
+	    value: function handleEmailChange(e) {
+	      this.setState({
+	        email: e.target.value
 	      });
 	    }
 	  }, {
@@ -27207,9 +27225,10 @@
 	      console.log('this.state: ', this.state);
 	      (0, _axios2.default)({
 	        method: 'post',
-	        url: '/',
+	        url: '/login',
 	        data: {
 	          username: this.state.username,
+	          email: this.state.email,
 	          password: this.state.password
 	        } }).then(function (res) {
 	        console.log('res', res);
@@ -27223,9 +27242,11 @@
 	    value: function render() {
 	      return _react2.default.createElement(_AuthForm2.default, {
 	        username: this.state.username,
+	        email: this.state.email,
 	        password: this.state.password,
 	        handleClick: this.handleClick,
 	        handleUsernameChange: this.handleUsernameChange,
+	        handleEmailChange: this.handleEmailChange,
 	        handlePasswordChange: this.handlePasswordChange,
 	        btnText: 'Log In'
 	      });
@@ -28746,7 +28767,8 @@
 	  return _react2.default.createElement(
 	    'div',
 	    null,
-	    _react2.default.createElement('input', { type: 'email', placeholder: 'email', value: props.username, onChange: props.handleUsernameChange, className: 'email' }),
+	    _react2.default.createElement('input', { type: 'text', placeholder: 'username', value: props.username, onChange: props.handleUsernameChange, className: 'username' }),
+	    _react2.default.createElement('input', { type: 'email', placeholder: 'email', value: props.email, onChange: props.handleEmailChange, className: 'email' }),
 	    _react2.default.createElement('input', { type: 'password', placeholder: 'password', value: props.password, onChange: props.handlePasswordChange, className: 'password' }),
 	    _react2.default.createElement(
 	      'button',
@@ -28856,10 +28878,12 @@
 
 	    _this.state = {
 	      username: '',
+	      email: '',
 	      password: ''
 	    };
 	    _this.handleClick = _this.handleClick.bind(_this);
 	    _this.handleUsernameChange = _this.handleUsernameChange.bind(_this);
+	    _this.handleEmailChange = _this.handleEmailChange.bind(_this);
 	    _this.handlePasswordChange = _this.handlePasswordChange.bind(_this);
 	    return _this;
 	  }
@@ -28869,6 +28893,13 @@
 	    value: function handleUsernameChange(e) {
 	      this.setState({
 	        username: e.target.value
+	      });
+	    }
+	  }, {
+	    key: 'handleEmailChange',
+	    value: function handleEmailChange(e) {
+	      this.setState({
+	        email: e.target.value
 	      });
 	    }
 	  }, {
@@ -28888,6 +28919,7 @@
 	        url: '/signup',
 	        data: {
 	          username: this.state.username,
+	          email: this.state.email,
 	          password: this.state.password
 	        } }).then(function (res) {
 	        console.log('res', res);
@@ -28901,9 +28933,11 @@
 	    value: function render() {
 	      return _react2.default.createElement(_AuthForm2.default, {
 	        username: this.state.username,
+	        email: this.state.email,
 	        password: this.state.password,
 	        handleClick: this.handleClick,
 	        handleUsernameChange: this.handleUsernameChange,
+	        handleEmailChange: this.handleEmailChange,
 	        handlePasswordChange: this.handlePasswordChange,
 	        btnText: 'Sign Up'
 	      });
@@ -28938,13 +28972,17 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _axios = __webpack_require__(238);
-
-	var _axios2 = _interopRequireDefault(_axios);
-
 	var _gravatar = __webpack_require__(267);
 
 	var _gravatar2 = _interopRequireDefault(_gravatar);
+
+	var _StatTable = __webpack_require__(273);
+
+	var _StatTable2 = _interopRequireDefault(_StatTable);
+
+	var _axios = __webpack_require__(238);
+
+	var _axios2 = _interopRequireDefault(_axios);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28964,7 +29002,8 @@
 
 	    _this.state = {
 	      userid: _this.props.params.userid,
-	      profilePhotoLink: ''
+	      profilePhotoLink: '',
+	      statsPerGame: []
 	    };
 	    return _this;
 	  }
@@ -28972,8 +29011,14 @@
 	  _createClass(Profile, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      console.log('User id from params: this.state.userid');
+	      var _this2 = this;
+
 	      this.setState({ profilePhotoLink: _gravatar2.default.url('canoc4262@gmail.com', { s: '350', r: 'g', d: '404' }) });
+
+	      _axios2.default.get('http://localhost:8080/player-stats').then(function (response) {
+	        console.log('response from GET to database', response);
+	        _this2.setState({ statsPerGame: response });
+	      });
 	    }
 	  }, {
 	    key: 'render',
@@ -28988,7 +29033,8 @@
 	          'User Id: ',
 	          this.state.userid
 	        ),
-	        _react2.default.createElement('img', { src: this.state.profilePhotoLink })
+	        _react2.default.createElement('img', { src: this.state.profilePhotoLink }),
+	        _react2.default.createElement(_StatTable2.default, { statsPerGame: this.state.statsPerGame })
 	      );
 	    }
 	  }]);
@@ -29511,6 +29557,296 @@
 	         encodeURIComponent(stringifyPrimitive(obj));
 	};
 
+
+/***/ },
+/* 273 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _StatRow = __webpack_require__(274);
+
+	var _StatRow2 = _interopRequireDefault(_StatRow);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var StatTable = function (_Component) {
+	  _inherits(StatTable, _Component);
+
+	  function StatTable(props) {
+	    _classCallCheck(this, StatTable);
+
+	    var _this = _possibleConstructorReturn(this, (StatTable.__proto__ || Object.getPrototypeOf(StatTable)).call(this, props));
+
+	    _this.state = {
+	      statsPerGame: []
+	    };
+	    return _this;
+	  }
+
+	  _createClass(StatTable, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.setState({ statsPerGame: this.props.statsPerGame });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var statRows = [];
+
+	      this.state.statsPerGame.forEach(function (game) {
+	        var newStatRow = _react2.default.createElement(_StatRow2.default, {
+	          opponent: game.opponent,
+	          targets: game.targets,
+	          completionsAllowed: game.completionsAllowed,
+	          yardsAllowed: game.yardsAllowed,
+	          tdsGivenUp: game.tdsGivenUp
+	        });
+	        statRows.push(newStatRow);
+	      });
+
+	      return _react2.default.createElement(
+	        'table',
+	        null,
+	        _react2.default.createElement(
+	          'tbody',
+	          null,
+	          _react2.default.createElement(
+	            'tr',
+	            null,
+	            _react2.default.createElement(
+	              'th',
+	              null,
+	              'Game'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              null,
+	              'Targets'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              null,
+	              'Completions Allowed'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              null,
+	              'Yards Allowed'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              null,
+	              'TD Given Up'
+	            )
+	          ),
+	          statRows
+	        )
+	      );
+	    }
+	  }]);
+
+	  return StatTable;
+	}(_react.Component);
+
+	exports.default = StatTable;
+
+/***/ },
+/* 274 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = function (props) {
+	  return _react2.default.createElement(
+	    'tr',
+	    null,
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      props.opponent
+	    ),
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      props.targets
+	    ),
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      props.completionsAllowed
+	    ),
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      props.yardsAllowed
+	    ),
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      props.tdsGivenUp
+	    )
+	  );
+	};
+
+/***/ },
+/* 275 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _axios = __webpack_require__(238);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CreateGame = function (_Component) {
+	  _inherits(CreateGame, _Component);
+
+	  function CreateGame() {
+	    _classCallCheck(this, CreateGame);
+
+	    var _this = _possibleConstructorReturn(this, (CreateGame.__proto__ || Object.getPrototypeOf(CreateGame)).call(this));
+
+	    _this.state = {
+	      opponent: '',
+	      targets: '',
+	      completionsAllowed: '',
+	      yardsAllowed: '',
+	      tdsGivenUp: ''
+	    };
+	    _this.handleOpponentChange = _this.handleOpponentChange.bind(_this);
+	    _this.handleTargetsChange = _this.handleTargetsChange.bind(_this);
+	    _this.handleCompletionsAllowedChange = _this.handleCompletionsAllowedChange.bind(_this);
+	    _this.handleYardsAllowedChange = _this.handleYardsAllowedChange.bind(_this);
+	    _this.handleTDsGivenUpChange = _this.handleTDsGivenUpChange.bind(_this);
+	    _this.handleClick = _this.handleClick.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(CreateGame, [{
+	    key: 'handleOpponentChange',
+	    value: function handleOpponentChange(e) {
+	      this.setState({
+	        opponent: e.target.value
+	      });
+	    }
+	  }, {
+	    key: 'handleTargetsChange',
+	    value: function handleTargetsChange(e) {
+	      this.setState({
+	        targets: e.target.value
+	      });
+	    }
+	  }, {
+	    key: 'handleCompletionsAllowedChange',
+	    value: function handleCompletionsAllowedChange(e) {
+	      this.setState({
+	        completionsAllowed: e.target.value
+	      });
+	    }
+	  }, {
+	    key: 'handleYardsAllowedChange',
+	    value: function handleYardsAllowedChange(e) {
+	      this.setState({
+	        yardsAllowed: e.target.value
+	      });
+	    }
+	  }, {
+	    key: 'handleTDsGivenUpChange',
+	    value: function handleTDsGivenUpChange(e) {
+	      this.setState({
+	        tdsGivenUp: e.target.value
+	      });
+	    }
+	  }, {
+	    key: 'handleClick',
+	    value: function handleClick(e) {
+	      e.preventDefault();
+	      console.log('this.state: ', this.state);
+	      (0, _axios2.default)({
+	        method: 'post',
+	        url: '/create-game',
+	        data: {
+	          opponent: this.state.opponent,
+	          targets: this.state.targets,
+	          completionsAllowed: this.state.completionsAllowed,
+	          yardsAllowed: this.state.yardsAllowed,
+	          tdsGivenUp: this.state.tdsGiven
+	        } }).then(function (res) {
+	        console.log('res', res);
+	      }).catch(function (err) {
+	        console.log('err:', err);
+	      });
+	      //this.setState({ username: '', password: '' });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement('input', { type: 'text', placeholder: 'Opponent', value: this.state.opponent, onChange: this.handleOpponentChange, className: 'opponentInput' }),
+	        _react2.default.createElement('input', { type: 'text', placeholder: 'Targets', value: this.state.targets, onChange: this.handleTargetsChange, className: 'targetsInput' }),
+	        _react2.default.createElement('input', { type: 'text', placeholder: 'Completions Allowed', value: this.state.completionsAllowed, onChange: this.handleCompletionsAllowedChange, className: 'completionsAllowedInput' }),
+	        _react2.default.createElement('input', { type: 'text', placeholder: 'Yards Allowed', value: this.state.yardsAllowed, onChange: this.handleYardsAllowedChange, className: 'YardsAllowedInput' }),
+	        _react2.default.createElement('input', { type: 'text', placeholder: 'TDs Given Up', value: this.state.tdsGivenUp, onChange: this.handleTDsGivenUpChange, className: 'TDsGivenUpInput' }),
+	        _react2.default.createElement(
+	          'button',
+	          { type: 'button', className: 'createGameBtn', onClick: this.handleClick },
+	          "Add Game"
+	        )
+	      );
+	    }
+	  }]);
+
+	  return CreateGame;
+	}(_react.Component);
+
+	exports.default = CreateGame;
 
 /***/ }
 /******/ ]);

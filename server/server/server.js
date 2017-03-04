@@ -6,13 +6,32 @@ const cookieParser = require('cookie-parser');
 const User = require('./../db/postgres').User;
 const Game = require('./../db/postgres').Game;
 
+// sessions and redis 
+const redis = require('redis');
+const session = require('express-session');
+const redisStore = require('connect-redis')(session);
+const redisClient = redis.createClient();
+
+const bcrypt = require('bcryptjs');
+
+app.use(session({
+  secret: 'secret',
+  store: new redisStore({ host: 'localhost', port: 6379, client: redisClient, ttl: 260 }),
+  saveUninitialized: false,
+  resave: false
+}));
+
 app.use(express.static(__dirname + './../../src/static'));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+let sess;
 app.get('*', (req, res) => {
-  console.log('REQ URL:',req.url);
+  //console.log('REQ URL:',req.url);
+  sess = req.session;
+  console.log('SESS:', sess);
   res.status(200).sendFile(path.resolve(__dirname + './../../src/static/index.html'));
 });
 
@@ -33,7 +52,7 @@ app.get('/player-stats', (req, res) => {
     //res.end();
 });
 
-app.post('/', (req, res) => {
+app.post('/login', (req, res) => {
   console.log('req: ', req.body);
   User.findOne({
     where: {
@@ -49,19 +68,22 @@ app.post('/', (req, res) => {
 
 app.post('/signup', (req, res) => {
   console.log('req body', req.body);
-  User.sync().then(() => {
+  User.sync({ force: true }).then(() => {
     const testData = {
       username: req.body.username,
+      email: req.body.email,
       password: req.body.password
     }
 
     User.create(testData).then((data) => {
-      console.dir(data.get());
+      //console.dir(data.get());
+      //console.log('RESPONSE in server.js:', res);
+      res.json(data);
     });
 });
   //console.log('res body', res);
   //console.log('POST at home');
-  res.end();
+  //res.end();
 });
 
 app.post('/create-game', (req, res) => {
