@@ -2,6 +2,8 @@ import React,  { Component } from 'react';
 import axios from 'axios';
 import AuthForm from './../presentational/AuthForm';
 
+import login from './../actions/login';
+
 export default class LoginForm extends Component {
   constructor() {
     super();
@@ -31,19 +33,25 @@ export default class LoginForm extends Component {
     });
   }
   handleClick(e) {
-    e.preventDefault();
-    console.log('this.state: ', this.state);
-    axios({
-      method: 'post',
-      url: '/login', 
-      data: {
-      username: this.state.username, 
-      email: this.state.email,
-      password: this.state.password 
-    }})
-      .then((res) => {console.log('res', res)})
-      .catch((err) => {console.log('err:', err)});
-    //this.setState({ username: '', password: '' });
+    // e.preventDefault();
+    // console.log('this.state: ', this.state);
+    // axios({
+    //   method: 'post',
+    //   url: '/login', 
+    //   data: {
+    //   username: this.state.username, 
+    //   email: this.state.email,
+    //   password: this.state.password 
+    // }})
+    //   .then((res) => {console.log('res', res)})
+    //   .catch((err) => {console.log('err:', err)});
+    // //this.setState({ username: '', password: '' });
+    const username = this.state.username;
+    const password = this.state.password;
+    this.props.dispatch(login({
+      username,
+      password
+    }));
   }
   render() {
     return (
