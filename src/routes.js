@@ -1,8 +1,5 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
 import App from './components/App';
 import Home from './components/container/Home';
 import Signup from './components/container/Signup';
