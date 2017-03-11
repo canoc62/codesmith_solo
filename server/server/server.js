@@ -28,12 +28,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 let sess;
-app.get('*', (req, res) => {
-  //console.log('REQ URL:',req.url);
-  sess = req.session;
-  console.log('SESS:', sess);
-  res.status(200).sendFile(path.resolve(__dirname + './../../src/static/index.html'));
-});
 
 app.get('/player-stats', (req, res) => {
  
@@ -52,18 +46,39 @@ app.get('/player-stats', (req, res) => {
     //res.end();
 });
 
+app.get('*', (req, res) => {
+  //console.log('REQ URL:',req.url);
+  sess = req.session;
+  console.log('SESS:', sess);
+  res.status(200).sendFile(path.resolve(__dirname + './../../src/static/index.html'));
+});
+
 app.post('/login', (req, res) => {
   console.log('req: ', req.body);
+  //bcrypt.compare(req.body.password)
   User.findOne({
     where: {
       username: req.body.username,
-      password: req.body.password
+      //password: req.body.password
     }
   })
   .then((result) => {
-    console.log('result for User.findOne:', result);
+    console.log('result for User.findOne:', result.dataValues);
+
+    bcrypt.compare(req.body.password, result.dataValues.password, (err, result) => {
+      if (err) {
+        console.log('compare ERR:', err);
+        res.send(err);
+      }
+      else {
+        console.log('compare RESULT:', result);
+        res.send(result);
+      }
+    });
+  }).catch(()=>{
+    res.sendStatus(401);
   });
-  res.end();
+  //res.end();
 });
 
 app.post('/signup', (req, res) => {
@@ -103,4 +118,6 @@ app.post('/create-game', (req, res) => {
   });
 });
 
-app.listen(8080);
+app.listen(8080, () => {
+  console.log("Listening at PORT 8080");
+});

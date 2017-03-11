@@ -43,10 +43,13 @@ export default function login(userData) {
         return response.json();
       })
       .then((data) => {
+        console.log('HELLLo befoe going to profile');
         dispatch(loginSuccess(data.token, data.username));
         browserHistory.push('/profile');
       })
       .catch((error) => {
+        console.log('Hello fail!');
+        console.log('Error:', error);
         dispatch(loginFail());
       });
   }

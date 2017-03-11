@@ -1,10 +1,11 @@
 import React,  { Component } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import AuthForm from './../presentational/AuthForm';
 
-import login from './../actions/login';
+import login from './../../actions/login';
 
-export default class LoginForm extends Component {
+class LoginForm extends Component {
   constructor() {
     super();
 
@@ -14,7 +15,7 @@ export default class LoginForm extends Component {
     }
     this.handleClick = this.handleClick.bind(this);
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
+    //this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
   }
   handleUsernameChange(e) {
@@ -22,11 +23,11 @@ export default class LoginForm extends Component {
       username: e.target.value
     });
   }
-  handleEmailChange(e) {
-    this.setState({
-      email: e.target.value
-    });
-  }
+  // handleEmailChange(e) {
+  //   this.setState({
+  //     email: e.target.value
+  //   });
+  // }
   handlePasswordChange(e) {
     this.setState({
       password: e.target.value
@@ -57,14 +58,14 @@ export default class LoginForm extends Component {
     return (
       <AuthForm 
         username={ this.state.username }
-        email={ this.state.email }
         password={ this.state.password }
         handleClick={ this.handleClick }
         handleUsernameChange={ this.handleUsernameChange }
-        handleEmailChange={ this.handleEmailChange }
         handlePasswordChange={ this.handlePasswordChange }
         btnText={'Log In'}
       />
     )
   }
 }
+
+export default connect()(LoginForm);
