@@ -43,7 +43,7 @@ export default function login(userData) {
         return response.json();
       })
       .then((data) => {
-        console.log('HELLLo befoe going to profile');
+        console.log('HELLLo before going to profile');
         dispatch(loginSuccess(data.token, data.username));
         browserHistory.push('/profile');
       })

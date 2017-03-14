@@ -1,6 +1,7 @@
 import React,  { Component } from 'react';
 import { connect } from 'react-redux';
 import SignupForm from './../presentational/SignupFormContainer';
+import PasswordMismatch from './../presentational/PasswordMismatch';
 
 import signup from './../../actions/signup';
 
@@ -12,7 +13,8 @@ class SignupFormContainer extends Component {
       username: '',
       password: '',
       passwordConfirm,
-      email: ''
+      email: '',
+      passwordMismatch: false
     }
     this.handleClick = this.handleClick.bind(this);
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
@@ -43,28 +45,51 @@ class SignupFormContainer extends Component {
   handleClick(e) {
     const username = this.state.username;
     const password = this.state.password;
-    this.props.dispatch(signup({
-      username,
-      password,
-      email,
-    }));
+    const passwordConfirm = this.state.passwordConfirm;
+    const email = this.state.email;
+
+    if (password === passwordConfirm) {
+      this.setState({ passwordMismatch: false }, () => {
+        this.props.dispatch(signup({
+          username,
+          password,
+          passwordConfirm,
+          email,
+        }));
+      });
+      // this.props.dispatch(signup({
+      //   username,
+      //   password,
+      //   passwordConfirm,
+      //   email,
+      // }));
+    } else {
+      this.setState({ passwordMismatch: true });
+    }
   }
   render() {
-    return (
-      //change to another auth form
-      <SignupForm 
-        username={ this.state.username }
-        password={ this.state.password }
-        passwordConfirm={ this.state.passwordConfirm }
-        email={ this.state.email }
-        handleClick={ this.handleClick }
-        handleUsernameChange={ this.handleUsernameChange }
-        handlePasswordChange={ this.handlePasswordChange }
-        handlePasswordConfirmChange={ this.handlePasswordConfirmChange }
-        handleEmailChange={ this.handleEmailChange }
-        btnText={'Sign Up'}
-      />
-    )
+
+    if (!this.state.passwordMismatch) {
+
+      return (
+        <SignupForm 
+          username={ this.state.username }
+          password={ this.state.password }
+          passwordConfirm={ this.state.passwordConfirm }
+          email={ this.state.email }
+          handleClick={ this.handleClick }
+          handleUsernameChange={ this.handleUsernameChange }
+          handlePasswordChange={ this.handlePasswordChange }
+          handlePasswordConfirmChange={ this.handlePasswordConfirmChange }
+          handleEmailChange={ this.handleEmailChange }
+          btnText={'Sign Up'}
+        />
+      )
+    } else {
+      return (
+        <PasswordMismatch />
+      )
+    }
   }
 }
 
