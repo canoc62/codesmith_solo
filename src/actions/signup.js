@@ -41,11 +41,12 @@ export default function signup(userData) {
         return response.json();
       })
       .then((data) => {
+        console.log('SIGNUP SUCCESS!');
         dispatch(signupSuccess(data.token, data.username));
-
-        browserHistory('/profile');
+        browserHistory.push('/profile');
       })
       .catch((error) => {
+        console.log('SIGNUP FAIL error:', error);
         dispatch(signupFail());
       });
   }

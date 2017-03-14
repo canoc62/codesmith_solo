@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d0288d895e18db37f9e0"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a1fe4dd4f95e780eb7c0"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -599,13 +599,13 @@
 
 	var _reactRedux = __webpack_require__(238);
 
-	var _reduxThunk = __webpack_require__(315);
+	var _reduxThunk = __webpack_require__(318);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
 	var _redux = __webpack_require__(247);
 
-	var _store = __webpack_require__(316);
+	var _store = __webpack_require__(319);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -26957,11 +26957,11 @@
 
 	var _Signup2 = _interopRequireDefault(_Signup);
 
-	var _Profile = __webpack_require__(305);
+	var _Profile = __webpack_require__(308);
 
 	var _Profile2 = _interopRequireDefault(_Profile);
 
-	var _CreateGame = __webpack_require__(314);
+	var _CreateGame = __webpack_require__(317);
 
 	var _CreateGame2 = _interopRequireDefault(_CreateGame);
 
@@ -27124,9 +27124,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _LoginForm = __webpack_require__(237);
+	var _LoginFormContainer = __webpack_require__(237);
 
-	var _LoginForm2 = _interopRequireDefault(_LoginForm);
+	var _LoginFormContainer2 = _interopRequireDefault(_LoginFormContainer);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27152,7 +27152,7 @@
 	        'div',
 	        null,
 	        'Home',
-	        _react2.default.createElement(_LoginForm2.default, null)
+	        _react2.default.createElement(_LoginFormContainer2.default, null)
 	      );
 	    }
 	  }]);
@@ -27184,9 +27184,9 @@
 
 	var _axios2 = _interopRequireDefault(_axios);
 
-	var _AuthForm = __webpack_require__(299);
+	var _LoginForm = __webpack_require__(299);
 
-	var _AuthForm2 = _interopRequireDefault(_AuthForm);
+	var _LoginForm2 = _interopRequireDefault(_LoginForm);
 
 	var _login = __webpack_require__(300);
 
@@ -27200,13 +27200,13 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var LoginForm = function (_Component) {
-	  _inherits(LoginForm, _Component);
+	var LoginFormContainer = function (_Component) {
+	  _inherits(LoginFormContainer, _Component);
 
-	  function LoginForm() {
-	    _classCallCheck(this, LoginForm);
+	  function LoginFormContainer() {
+	    _classCallCheck(this, LoginFormContainer);
 
-	    var _this = _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).call(this));
+	    var _this = _possibleConstructorReturn(this, (LoginFormContainer.__proto__ || Object.getPrototypeOf(LoginFormContainer)).call(this));
 
 	    _this.state = {
 	      username: '',
@@ -27219,7 +27219,7 @@
 	    return _this;
 	  }
 
-	  _createClass(LoginForm, [{
+	  _createClass(LoginFormContainer, [{
 	    key: 'handleUsernameChange',
 	    value: function handleUsernameChange(e) {
 	      this.setState({
@@ -27265,7 +27265,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(_AuthForm2.default, {
+	      return _react2.default.createElement(_LoginForm2.default, {
 	        username: this.state.username,
 	        password: this.state.password,
 	        handleClick: this.handleClick,
@@ -27276,10 +27276,10 @@
 	    }
 	  }]);
 
-	  return LoginForm;
+	  return LoginFormContainer;
 	}(_react.Component);
 
-	exports.default = (0, _reactRedux.connect)()(LoginForm);
+	exports.default = (0, _reactRedux.connect)()(LoginFormContainer);
 
 /***/ },
 /* 238 */
@@ -31002,7 +31002,7 @@
 
 	      return response.json();
 	    }).then(function (data) {
-	      console.log('HELLLo befoe going to profile');
+	      console.log('HELLLo before going to profile');
 	      dispatch(loginSuccess(data.token, data.username));
 	      _reactRouter.browserHistory.push('/profile');
 	    }).catch(function (error) {
@@ -31505,9 +31505,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _SignupForm = __webpack_require__(304);
+	var _SignupFormContainer = __webpack_require__(304);
 
-	var _SignupForm2 = _interopRequireDefault(_SignupForm);
+	var _SignupFormContainer2 = _interopRequireDefault(_SignupFormContainer);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31537,7 +31537,7 @@
 	          null,
 	          'Sign Up!'
 	        ),
-	        _react2.default.createElement(_SignupForm2.default, null)
+	        _react2.default.createElement(_SignupFormContainer2.default, null)
 	      );
 	    }
 	  }]);
@@ -31563,13 +31563,19 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _axios = __webpack_require__(274);
+	var _reactRedux = __webpack_require__(238);
 
-	var _axios2 = _interopRequireDefault(_axios);
+	var _SignupForm = __webpack_require__(305);
 
-	var _AuthForm = __webpack_require__(299);
+	var _SignupForm2 = _interopRequireDefault(_SignupForm);
 
-	var _AuthForm2 = _interopRequireDefault(_AuthForm);
+	var _PasswordMismatch = __webpack_require__(306);
+
+	var _PasswordMismatch2 = _interopRequireDefault(_PasswordMismatch);
+
+	var _signup = __webpack_require__(307);
+
+	var _signup2 = _interopRequireDefault(_signup);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31579,27 +31585,30 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var SignupForm = function (_Component) {
-	  _inherits(SignupForm, _Component);
+	var SignupFormContainer = function (_Component) {
+	  _inherits(SignupFormContainer, _Component);
 
-	  function SignupForm() {
-	    _classCallCheck(this, SignupForm);
+	  function SignupFormContainer() {
+	    _classCallCheck(this, SignupFormContainer);
 
-	    var _this = _possibleConstructorReturn(this, (SignupForm.__proto__ || Object.getPrototypeOf(SignupForm)).call(this));
+	    var _this = _possibleConstructorReturn(this, (SignupFormContainer.__proto__ || Object.getPrototypeOf(SignupFormContainer)).call(this));
 
 	    _this.state = {
 	      username: '',
+	      password: '',
+	      passwordConfirm: '',
 	      email: '',
-	      password: ''
+	      passwordMismatch: false
 	    };
 	    _this.handleClick = _this.handleClick.bind(_this);
 	    _this.handleUsernameChange = _this.handleUsernameChange.bind(_this);
 	    _this.handleEmailChange = _this.handleEmailChange.bind(_this);
 	    _this.handlePasswordChange = _this.handlePasswordChange.bind(_this);
+	    _this.handlePasswordConfirmChange = _this.handlePasswordConfirmChange.bind(_this);
 	    return _this;
 	  }
 
-	  _createClass(SignupForm, [{
+	  _createClass(SignupFormContainer, [{
 	    key: 'handleUsernameChange',
 	    value: function handleUsernameChange(e) {
 	      this.setState({
@@ -31621,54 +31630,215 @@
 	      });
 	    }
 	  }, {
+	    key: 'handlePasswordConfirmChange',
+	    value: function handlePasswordConfirmChange(e) {
+	      this.setState({
+	        passwordConfirm: e.target.value
+	      });
+	    }
+	  }, {
 	    key: 'handleClick',
 	    value: function handleClick(e) {
-	      e.preventDefault();
-	      console.log('this.state: ', this.state);
-	      (0, _axios2.default)({
-	        method: 'post',
-	        url: '/signup',
-	        data: {
-	          username: this.state.username,
-	          email: this.state.email,
-	          password: this.state.password
-	        } }).then(function (res) {
-	        console.log('RESPONSE in signupform.js', res);
-	      }).catch(function (err) {
-	        console.log('err:', err);
-	      });
-	      //this.setState({ username: '', password: '' });
+	      var _this2 = this;
+
+	      var username = this.state.username;
+	      var password = this.state.password;
+	      var passwordConfirm = this.state.passwordConfirm;
+	      var email = this.state.email;
+
+	      if (password === passwordConfirm) {
+	        this.setState({ passwordMismatch: false }, function () {
+	          _this2.props.dispatch((0, _signup2.default)({
+	            username: username,
+	            password: password,
+	            passwordConfirm: passwordConfirm,
+	            email: email
+	          }));
+	        });
+	        // this.props.dispatch(signup({
+	        //   username,
+	        //   password,
+	        //   passwordConfirm,
+	        //   email,
+	        // }));
+	      } else {
+	        this.setState({ passwordMismatch: true });
+	      }
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(_AuthForm2.default, {
-	        username: this.state.username,
-	        email: this.state.email,
-	        password: this.state.password,
-	        handleClick: this.handleClick,
-	        handleUsernameChange: this.handleUsernameChange,
-	        handleEmailChange: this.handleEmailChange,
-	        handlePasswordChange: this.handlePasswordChange,
-	        btnText: 'Sign Up'
-	      });
+
+	      if (!this.state.passwordMismatch) {
+
+	        return _react2.default.createElement(_SignupForm2.default, {
+	          username: this.state.username,
+	          password: this.state.password,
+	          passwordConfirm: this.state.passwordConfirm,
+	          email: this.state.email,
+	          handleClick: this.handleClick,
+	          handleUsernameChange: this.handleUsernameChange,
+	          handlePasswordChange: this.handlePasswordChange,
+	          handlePasswordConfirmChange: this.handlePasswordConfirmChange,
+	          handleEmailChange: this.handleEmailChange,
+	          btnText: 'Sign Up'
+	        });
+	      } else {
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(_PasswordMismatch2.default, null),
+	          _react2.default.createElement(_SignupForm2.default, {
+	            username: this.state.username,
+	            password: this.state.password,
+	            passwordConfirm: this.state.passwordConfirm,
+	            email: this.state.email,
+	            handleClick: this.handleClick,
+	            handleUsernameChange: this.handleUsernameChange,
+	            handlePasswordChange: this.handlePasswordChange,
+	            handlePasswordConfirmChange: this.handlePasswordConfirmChange,
+	            handleEmailChange: this.handleEmailChange,
+	            btnText: 'Sign Up'
+	          })
+	        );
+	      }
 	    }
 	  }]);
 
-	  return SignupForm;
+	  return SignupFormContainer;
 	}(_react.Component);
 
-	// <div>
-	//   <input type='email' placeholder='email' value={ this.state.username } handleChange={ this.handleUsernameChange.bind(this) } className='email'/>
-	//   <input type='password' placeholder='password' value={ this.state.password } handleChange={ this.handlePasswordChange.bind(this) } className='password'/>
-	//   <button type='submit' className='loginBtn' handleClick={ this.handleClick }>Log In</button>
-	// </div>
-
-
-	exports.default = SignupForm;
+	exports.default = (0, _reactRedux.connect)()(SignupFormContainer);
 
 /***/ },
 /* 305 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = function (props) {
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement('input', { type: 'text', placeholder: 'Username', value: props.username, onChange: props.handleUsernameChange, className: 'username' }),
+	    _react2.default.createElement('input', { type: 'text', placeholder: 'Email', value: props.email, onChange: props.handleEmailChange, className: 'email' }),
+	    _react2.default.createElement('input', { type: 'password', placeholder: 'Password', value: props.password, onChange: props.handlePasswordChange, className: 'password' }),
+	    _react2.default.createElement('input', { type: 'password', placeholder: 'Confirm Password', value: props.passwordConfirm, onChange: props.handlePasswordConfirmChange, className: 'password' }),
+	    _react2.default.createElement(
+	      'button',
+	      { type: 'submit', className: 'signupBtn', onClick: props.handleClick },
+	      props.btnText
+	    )
+	  );
+	};
+
+/***/ },
+/* 306 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = function (props) {
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      'The passwords you entered do not match. Please re-enter your passwords and make sure they match.'
+	    )
+	  );
+	};
+
+/***/ },
+/* 307 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = signup;
+
+	var _reactRouter = __webpack_require__(178);
+
+	var _isomorphicFetch = __webpack_require__(301);
+
+	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function signupAttempt() {
+	  return {
+	    type: 'SIGNUP_ATTEMPT'
+	  };
+	}
+
+	function signupSuccess(token, username) {
+	  localStorage.setItem('devBase_user_token', token);
+	  localStorage.setItem('devBase_username', username);
+	  return {
+	    type: 'SIGNUP_SUCCESS'
+	  };
+	}
+
+	function signupFail() {
+	  return {
+	    type: 'SIGNUP_FAIL'
+	  };
+	}
+
+	function signup(userData) {
+
+	  return function (dispatch) {
+	    dispatch(signupAttempt());
+
+	    return (0, _isomorphicFetch2.default)('/signup', {
+	      method: 'post',
+	      headers: {
+	        'Content-Type': 'application/json'
+	      },
+	      body: JSON.stringify(userData)
+	    }).then(function (response) {
+	      if (response.status !== 200) {
+	        throw new Error(response.statusText);
+	      }
+
+	      return response.json();
+	    }).then(function (data) {
+	      console.log('SIGNUP SUCCESS!');
+	      dispatch(signupSuccess(data.token, data.username));
+	      _reactRouter.browserHistory.push('/profile');
+	    }).catch(function (error) {
+	      console.log('SIGNUP FAIL error:', error);
+	      dispatch(signupFail());
+	    });
+	  };
+	}
+
+/***/ },
+/* 308 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31683,11 +31853,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _gravatar = __webpack_require__(306);
+	var _gravatar = __webpack_require__(309);
 
 	var _gravatar2 = _interopRequireDefault(_gravatar);
 
-	var _StatTable = __webpack_require__(312);
+	var _StatTable = __webpack_require__(315);
 
 	var _StatTable2 = _interopRequireDefault(_StatTable);
 
@@ -31756,18 +31926,18 @@
 	exports.default = Profile;
 
 /***/ },
-/* 306 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(307);
+	module.exports = __webpack_require__(310);
 
 
 /***/ },
-/* 307 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var md5 = __webpack_require__(308),
-	    querystring = __webpack_require__(309),
+	var md5 = __webpack_require__(311),
+	    querystring = __webpack_require__(312),
 	    MD5_REGEX = /^[0-9a-f]{32}$/;
 
 	function params(options) {
@@ -31817,7 +31987,7 @@
 
 
 /***/ },
-/* 308 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -32104,17 +32274,17 @@
 
 
 /***/ },
-/* 309 */
+/* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	exports.decode = exports.parse = __webpack_require__(310);
-	exports.encode = exports.stringify = __webpack_require__(311);
+	exports.decode = exports.parse = __webpack_require__(313);
+	exports.encode = exports.stringify = __webpack_require__(314);
 
 
 /***/ },
-/* 310 */
+/* 313 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -32200,7 +32370,7 @@
 
 
 /***/ },
-/* 311 */
+/* 314 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -32270,7 +32440,7 @@
 
 
 /***/ },
-/* 312 */
+/* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32285,7 +32455,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _StatRow = __webpack_require__(313);
+	var _StatRow = __webpack_require__(316);
 
 	var _StatRow2 = _interopRequireDefault(_StatRow);
 
@@ -32379,7 +32549,7 @@
 	exports.default = StatTable;
 
 /***/ },
-/* 313 */
+/* 316 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32427,7 +32597,7 @@
 	};
 
 /***/ },
-/* 314 */
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32560,7 +32730,7 @@
 	exports.default = CreateGame;
 
 /***/ },
-/* 315 */
+/* 318 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32588,7 +32758,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 316 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32599,11 +32769,11 @@
 
 	var _redux = __webpack_require__(247);
 
-	var _reduxThunk = __webpack_require__(315);
+	var _reduxThunk = __webpack_require__(318);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _rootReducer = __webpack_require__(317);
+	var _rootReducer = __webpack_require__(320);
 
 	var _rootReducer2 = _interopRequireDefault(_rootReducer);
 
@@ -32614,7 +32784,7 @@
 	exports.default = store;
 
 /***/ },
-/* 317 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32623,11 +32793,11 @@
 	  value: true
 	});
 
-	var _login = __webpack_require__(318);
+	var _login = __webpack_require__(321);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _logout = __webpack_require__(319);
+	var _logout = __webpack_require__(322);
 
 	var _logout2 = _interopRequireDefault(_logout);
 
@@ -32649,7 +32819,7 @@
 	exports.default = rootReducer;
 
 /***/ },
-/* 318 */
+/* 321 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32693,7 +32863,7 @@
 	}
 
 /***/ },
-/* 319 */
+/* 322 */
 /***/ function(module, exports) {
 
 	'use strict';

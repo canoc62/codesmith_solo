@@ -1,6 +1,6 @@
 import React,  { Component } from 'react';
 import { connect } from 'react-redux';
-import SignupForm from './../presentational/SignupFormContainer';
+import SignupForm from './../presentational/SignupForm';
 import PasswordMismatch from './../presentational/PasswordMismatch';
 
 import signup from './../../actions/signup';
@@ -12,7 +12,7 @@ class SignupFormContainer extends Component {
     this.state = {
       username: '',
       password: '',
-      passwordConfirm,
+      passwordConfirm: '',
       email: '',
       passwordMismatch: false
     }
@@ -87,7 +87,21 @@ class SignupFormContainer extends Component {
       )
     } else {
       return (
-        <PasswordMismatch />
+        <div>
+          <PasswordMismatch />
+          <SignupForm 
+            username={ this.state.username }
+            password={ this.state.password }
+            passwordConfirm={ this.state.passwordConfirm }
+            email={ this.state.email }
+            handleClick={ this.handleClick }
+            handleUsernameChange={ this.handleUsernameChange }
+            handlePasswordChange={ this.handlePasswordChange }
+            handlePasswordConfirmChange={ this.handlePasswordConfirmChange }
+            handleEmailChange={ this.handleEmailChange }
+            btnText={'Sign Up'}
+          />
+        </div>
       )
     }
   }
