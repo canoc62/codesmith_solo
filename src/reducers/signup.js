@@ -1,4 +1,4 @@
-const defaulSignupState = {
+const defaultSignupState = {
   signingup: false,
   signupFail: false,
   signupSuccess: false

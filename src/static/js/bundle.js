@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a1fe4dd4f95e780eb7c0"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ce1cacf714445a346148"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -30969,8 +30969,8 @@
 	}
 
 	function loginSuccess(token, username) {
-	  localStorage.setItem('devBase_user_token', token);
-	  localStorage.setItem('devBase_username', username);
+	  localStorage.setItem('solo_project_user_token', token);
+	  localStorage.setItem('solo_project_username', username);
 	  console.log("LOCAL STORAGE:", localStorage);
 	  return {
 	    type: 'LOGIN_SUCCESS'
@@ -31002,7 +31002,8 @@
 
 	      return response.json();
 	    }).then(function (data) {
-	      console.log('HELLLo before going to profile');
+	      console.log('HELLLo before going to profile, show data:', data);
+	      console.log('HEEELOOOOO', data.username);
 	      dispatch(loginSuccess(data.token, data.username));
 	      _reactRouter.browserHistory.push('/profile');
 	    }).catch(function (error) {
@@ -31796,8 +31797,8 @@
 	}
 
 	function signupSuccess(token, username) {
-	  localStorage.setItem('devBase_user_token', token);
-	  localStorage.setItem('devBase_username', username);
+	  localStorage.setItem('solo_project_user_token', token);
+	  localStorage.setItem('solo_project_username', username);
 	  return {
 	    type: 'SIGNUP_SUCCESS'
 	  };
@@ -31827,7 +31828,7 @@
 
 	      return response.json();
 	    }).then(function (data) {
-	      console.log('SIGNUP SUCCESS!');
+	      console.log('SIGNUP SUCCESS, show data:', data);
 	      dispatch(signupSuccess(data.token, data.username));
 	      _reactRouter.browserHistory.push('/profile');
 	    }).catch(function (error) {
@@ -31853,6 +31854,8 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactRouter = __webpack_require__(178);
+
 	var _gravatar = __webpack_require__(309);
 
 	var _gravatar2 = _interopRequireDefault(_gravatar);
@@ -31872,6 +31875,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	//import refreshSession from './../actions/refreshSession';
 
 	var Profile = function (_Component) {
 	  _inherits(Profile, _Component);
@@ -31894,13 +31899,24 @@
 	    value: function componentDidMount() {
 	      var _this2 = this;
 
-	      this.setState({ profilePhotoLink: _gravatar2.default.url('canoc4262@gmail.com', { s: '350', r: 'g', d: '404' }) });
+	      console.log('local storage solo_project_user_token:', localStorage.getItem('solo_project_user_token'));
+	      if (!localStorage.getItem('solo_project_user_token')) {
+	        _reactRouter.browserHistory.push('/');
+	      }
+	      //this.refresher = setInterval(this.refreshSession,20000)
+	      else {
+	          this.setState({ profilePhotoLink: _gravatar2.default.url('canoc4262@gmail.com', { s: '350', r: 'g', d: '404' }) });
 
-	      _axios2.default.get('http://localhost:8080/player-stats').then(function (response) {
-	        console.log('response from GET to database', response);
-	        _this2.setState({ statsPerGame: response });
-	      });
+	          _axios2.default.get('http://localhost:8080/player-stats').then(function (response) {
+	            console.log('response from GET to database', response);
+	            _this2.setState({ statsPerGame: response });
+	          });
+	        }
 	    }
+	    // componentWillUnmount() {
+	    //   clearInterval(this.refresher);
+	    // }
+
 	  }, {
 	    key: 'render',
 	    value: function render() {
@@ -32801,11 +32817,15 @@
 
 	var _logout2 = _interopRequireDefault(_logout);
 
+	var _signup = __webpack_require__(323);
+
+	var _signup2 = _interopRequireDefault(_signup);
+
 	var _redux = __webpack_require__(247);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var appReducer = (0, _redux.combineReducers)({ login: _login2.default, logout: _logout2.default });
+	var appReducer = (0, _redux.combineReducers)({ login: _login2.default, logout: _logout2.default, signup: _signup2.default });
 
 	var rootReducer = function rootReducer(state, action) {
 
@@ -32891,6 +32911,50 @@
 	      return Object.assign({}, state, {
 	        logginOut: false,
 	        loginSuccess: true
+	      });
+	    default:
+	      return state;
+	  }
+	}
+
+/***/ },
+/* 323 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = login;
+	var defaultSignupState = {
+	  signingup: false,
+	  signupFail: false,
+	  signupSuccess: false
+	};
+
+	function login() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultSignupState;
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case 'SIGNUP_ATTEMPT':
+	      return Object.assign({}, state, {
+	        signingup: true,
+	        signupFail: false,
+	        signupSuccess: false
+	      });
+	    case 'SIGNUP_FAIL':
+	      return Object.assign({}, state, {
+	        signingup: false,
+	        signupFail: true,
+	        signupSuccess: false
+	      });
+	    case 'SIGNUP_SUCCESS':
+	      return Object.assign({}, state, {
+	        signingup: false,
+	        signupFail: false,
+	        signupSuccess: true
 	      });
 	    default:
 	      return state;

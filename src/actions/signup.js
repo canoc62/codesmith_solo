@@ -8,8 +8,8 @@ function signupAttempt() {
 }
 
 function signupSuccess(token, username) {
-  localStorage.setItem('devBase_user_token', token);
-  localStorage.setItem('devBase_username', username);
+  localStorage.setItem('solo_project_user_token', token);
+  localStorage.setItem('solo_project_username', username);
   return {
     type: 'SIGNUP_SUCCESS'
   }
@@ -41,7 +41,7 @@ export default function signup(userData) {
         return response.json();
       })
       .then((data) => {
-        console.log('SIGNUP SUCCESS!');
+        console.log('SIGNUP SUCCESS, show data:', data);
         dispatch(signupSuccess(data.token, data.username));
         browserHistory.push('/profile');
       })

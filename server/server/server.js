@@ -13,6 +13,10 @@ const redisStore = require('connect-redis')(session);
 const redisClient = redis.createClient();
 
 const bcrypt = require('bcryptjs');
+const moment = require('moment');
+
+const createToken = require('./util/createToken');
+const expireTime = moment().unix() + 20; //expire in 20 seconds for testing
 
 app.use(session({
   secret: 'secret',
@@ -28,6 +32,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 let sess;
+
+app.get('/check-session', (req, res) => {
+
+  
+});
 
 app.get('/player-stats', (req, res) => {
  
@@ -55,11 +64,11 @@ app.get('*', (req, res) => {
 
 app.post('/login', (req, res) => {
   console.log('req: ', req.body);
-  //bcrypt.compare(req.body.password)
+  const username = req.body.username;
+
   User.findOne({
     where: {
-      username: req.body.username,
-      //password: req.body.password
+      username
     }
   })
   .then((result) => {
@@ -72,7 +81,23 @@ app.post('/login', (req, res) => {
       }
       else {
         console.log('compare RESULT:', result);
-        res.send(result);
+
+        // Create session token, save in redis
+        const token = createToken(username);
+        redisClient.set(username, token, (err, reply) => {
+          
+          if (err) {
+            res.status(500).send();
+          }
+
+          if (reply) {
+            redisClient.expireat(username, expireTime);
+            res.json({ username, token });
+          } else {
+            res.status(500).send();
+          }
+        });
+        //res.send(result);
       }
     });
   }).catch(()=>{
@@ -91,14 +116,10 @@ app.post('/signup', (req, res) => {
     }
 
     User.create(testData).then((data) => {
-      //console.dir(data.get());
-      //console.log('RESPONSE in server.js:', res);
+     
       res.json(data);
     });
-});
-  //console.log('res body', res);
-  //console.log('POST at home');
-  //res.end();
+  });
 });
 
 app.post('/create-game', (req, res) => {

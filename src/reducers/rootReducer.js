@@ -1,8 +1,10 @@
 import login from './login';
 import logout from './logout';
+import signup from './signup';
+
 import { combineReducers } from 'redux';
 
-const appReducer = combineReducers({ login, logout });
+const appReducer = combineReducers({ login, logout, signup });
 
 const rootReducer = (state, action) => {
 
