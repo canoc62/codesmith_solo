@@ -35,7 +35,26 @@ let sess;
 
 app.get('/check-session', (req, res) => {
 
-  
+  console.log('CHECK-SESSION req.body', req.body);
+  const sessionToken = req.body.sessionToken;
+
+  redisClient.get(req.body.sessionUsername, (err, reply) => {
+
+    console.log('REPLY from REDIS session query:', reply);
+    if (err) {
+      console.log('redisClient error:', err);
+      res.status(401).end();
+    } else {
+
+      // if the token of the give username (key) in redis matches the 
+      // session token sent in the request body, session is good.
+      if (reply === sessionToken) {
+        res.status(200).end();
+      } else {
+        res.status(401).end();
+      }
+    }
+  });
 });
 
 app.get('/player-stats', (req, res) => {

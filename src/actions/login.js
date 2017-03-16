@@ -46,7 +46,8 @@ export default function login(userData) {
         console.log('HELLLo before going to profile, show data:', data);
         console.log('HEEELOOOOO', data.username);
         dispatch(loginSuccess(data.token, data.username));
-        browserHistory.push('/profile');
+        browserHistory.push('/profile/' + data.username);
+        console.log('Browser pushed to profile!!!');
       })
       .catch((error) => {
         console.log('Hello fail!');

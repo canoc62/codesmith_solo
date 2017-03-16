@@ -11,7 +11,7 @@ const routes = (
     <IndexRoute component={Home}></IndexRoute>
     <Route path='/signup' component={Signup}></Route>
     <Route path='/profile' component={Profile}></Route>
-    <Route path='/profile/:userid' component={Profile}></Route>
+    <Route path='/profile/:username' component={Profile}></Route>
     <Route path='/create-game' component={CreateGame}></Route>
   </Route>
 );

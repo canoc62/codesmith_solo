@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ce1cacf714445a346148"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b55939773fb0f245db2c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -26973,7 +26973,7 @@
 	  _react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: '/signup', component: _Signup2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: '/profile', component: _Profile2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: '/profile/:userid', component: _Profile2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: '/profile/:username', component: _Profile2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: '/create-game', component: _CreateGame2.default })
 	);
 
@@ -31005,7 +31005,8 @@
 	      console.log('HELLLo before going to profile, show data:', data);
 	      console.log('HEEELOOOOO', data.username);
 	      dispatch(loginSuccess(data.token, data.username));
-	      _reactRouter.browserHistory.push('/profile');
+	      _reactRouter.browserHistory.push('/profile/' + data.username);
+	      console.log('Browser pushed to profile!!!');
 	    }).catch(function (error) {
 	      console.log('Hello fail!');
 	      console.log('Error:', error);
@@ -31899,17 +31900,65 @@
 	    value: function componentDidMount() {
 	      var _this2 = this;
 
+	      console.log('PROPS PARAMS:', this.props.params);
+	      console.log('LOCAL STORAGE FROM PROFILE:', localStorage);
 	      console.log('local storage solo_project_user_token:', localStorage.getItem('solo_project_user_token'));
-	      if (!localStorage.getItem('solo_project_user_token')) {
+	      var sessionToken = localStorage.getItem('solo_project_user_token');
+	      var sessionUsername = this.props.params.username;
+	      var sessionData = {
+	        sessionUsername: sessionUsername,
+	        sessionToken: sessionToken
+	      };
+
+	      if (!sessionToken) {
+	        console.log('Pushing back to home!');
 	        _reactRouter.browserHistory.push('/');
 	      }
 	      //this.refresher = setInterval(this.refreshSession,20000)
-	      else {
-	          this.setState({ profilePhotoLink: _gravatar2.default.url('canoc4262@gmail.com', { s: '350', r: 'g', d: '404' }) });
+	      // else {
+	      //   this.setState({ profilePhotoLink: gravatar.url('canoc4262@gmail.com', {s: '350', r: 'g', d: '404'}) });
 
-	          _axios2.default.get('http://localhost:8080/player-stats').then(function (response) {
-	            console.log('response from GET to database', response);
-	            _this2.setState({ statsPerGame: response });
+	      //   axios.get('http://localhost:8080/player-stats')
+	      //     .then((response) => {
+	      //       console.log('response from GET to database', response);
+	      //       this.setState({ statsPerGame: response })
+	      //     });
+	      // }
+	      else {
+	          console.log('about to fetch!');
+	          fetch('/check-session', {
+	            method: 'get',
+	            headers: {
+	              'Content-Type': 'application/json'
+	            },
+	            body: JSON.stringify(sessionData)
+	          }).then(function (response) {
+	            if (response.status !== 200) {
+	              console.log('FETCH ERROR from PROFILE component!');
+	              throw new Error(response.statusText);
+	            }
+
+	            console.log('before FETCH return from PROFILE component!');
+	            return response.json();
+	          }).then(function (data) {
+	            // console.log('SIGNUP SUCCESS, show data:', data);
+	            // dispatch(signupSuccess(data.token, data.username));
+	            // browserHistory.push('/profile');
+
+	            console.log('Session Success!');
+
+	            _this2.setState({ profilePhotoLink: _gravatar2.default.url('canoc4262@gmail.com', { s: '350', r: 'g', d: '404' }) });
+
+	            // axios.get('http://localhost:8080/player-stats')
+	            //   .then((response) => {
+	            //     console.log('response from GET to database', response);
+	            //     this.setState({ statsPerGame: response })
+	            //   });
+	          }).catch(function (error) {
+	            // console.log('SIGNUP FAIL error:', error);
+	            // dispatch(signupFail());
+	            console.log('Session fail, back to home page!');
+	            _reactRouter.browserHistory.push('/');
 	          });
 	        }
 	    }
