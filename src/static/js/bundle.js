@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b55939773fb0f245db2c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "9a31b7232ea5c29bc2f7"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -599,13 +599,13 @@
 
 	var _reactRedux = __webpack_require__(238);
 
-	var _reduxThunk = __webpack_require__(318);
+	var _reduxThunk = __webpack_require__(315);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
 	var _redux = __webpack_require__(247);
 
-	var _store = __webpack_require__(319);
+	var _store = __webpack_require__(316);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -26961,10 +26961,6 @@
 
 	var _Profile2 = _interopRequireDefault(_Profile);
 
-	var _CreateGame = __webpack_require__(317);
-
-	var _CreateGame2 = _interopRequireDefault(_CreateGame);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var routes = _react2.default.createElement(
@@ -26972,9 +26968,7 @@
 	  { path: '/', component: _App2.default },
 	  _react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: '/signup', component: _Signup2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: '/profile', component: _Profile2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: '/profile/:username', component: _Profile2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: '/create-game', component: _CreateGame2.default })
+	  _react2.default.createElement(_reactRouter.Route, { path: '/profile/:username', component: _Profile2.default })
 	);
 
 	exports.default = routes;
@@ -27093,11 +27087,6 @@
 	          _reactRouter.Link,
 	          { to: '/profile' },
 	          'Profile'
-	        ),
-	        _react2.default.createElement(
-	          _reactRouter.Link,
-	          { to: '/create-game' },
-	          'Add Game'
 	        )
 	      );
 	    }
@@ -31861,10 +31850,6 @@
 
 	var _gravatar2 = _interopRequireDefault(_gravatar);
 
-	var _StatTable = __webpack_require__(315);
-
-	var _StatTable2 = _interopRequireDefault(_StatTable);
-
 	var _axios = __webpack_require__(274);
 
 	var _axios2 = _interopRequireDefault(_axios);
@@ -31925,7 +31910,7 @@
 	      //     });
 	      // }
 	      else {
-	          console.log('about to fetch!');
+	          console.log('about to fetch!'); // FETCH NOT WORKING? TO CHECK IF SESSION IS VALLID BY CHECKING FOR TOKEN MATCH AGAINST REDIS
 	          fetch('/check-session', {
 	            method: 'get',
 	            headers: {
@@ -31976,11 +31961,10 @@
 	        _react2.default.createElement(
 	          'p',
 	          null,
-	          'User Id: ',
-	          this.state.userid
+	          'Username: ',
+	          this.props.params.username
 	        ),
-	        _react2.default.createElement('img', { src: this.state.profilePhotoLink }),
-	        _react2.default.createElement(_StatTable2.default, { statsPerGame: this.state.statsPerGame })
+	        _react2.default.createElement('img', { src: this.state.profilePhotoLink })
 	      );
 	    }
 	  }]);
@@ -32506,296 +32490,6 @@
 
 /***/ },
 /* 315 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _StatRow = __webpack_require__(316);
-
-	var _StatRow2 = _interopRequireDefault(_StatRow);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var StatTable = function (_Component) {
-	  _inherits(StatTable, _Component);
-
-	  function StatTable(props) {
-	    _classCallCheck(this, StatTable);
-
-	    var _this = _possibleConstructorReturn(this, (StatTable.__proto__ || Object.getPrototypeOf(StatTable)).call(this, props));
-
-	    _this.state = {
-	      statsPerGame: []
-	    };
-	    return _this;
-	  }
-
-	  _createClass(StatTable, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.setState({ statsPerGame: this.props.statsPerGame });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var statRows = [];
-
-	      this.state.statsPerGame.forEach(function (game) {
-	        var newStatRow = _react2.default.createElement(_StatRow2.default, {
-	          opponent: game.opponent,
-	          targets: game.targets,
-	          completionsAllowed: game.completionsAllowed,
-	          yardsAllowed: game.yardsAllowed,
-	          tdsGivenUp: game.tdsGivenUp
-	        });
-	        statRows.push(newStatRow);
-	      });
-
-	      return _react2.default.createElement(
-	        'table',
-	        null,
-	        _react2.default.createElement(
-	          'tbody',
-	          null,
-	          _react2.default.createElement(
-	            'tr',
-	            null,
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Game'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Targets'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Completions Allowed'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Yards Allowed'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'TD Given Up'
-	            )
-	          ),
-	          statRows
-	        )
-	      );
-	    }
-	  }]);
-
-	  return StatTable;
-	}(_react.Component);
-
-	exports.default = StatTable;
-
-/***/ },
-/* 316 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = function (props) {
-	  return _react2.default.createElement(
-	    'tr',
-	    null,
-	    _react2.default.createElement(
-	      'td',
-	      null,
-	      props.opponent
-	    ),
-	    _react2.default.createElement(
-	      'td',
-	      null,
-	      props.targets
-	    ),
-	    _react2.default.createElement(
-	      'td',
-	      null,
-	      props.completionsAllowed
-	    ),
-	    _react2.default.createElement(
-	      'td',
-	      null,
-	      props.yardsAllowed
-	    ),
-	    _react2.default.createElement(
-	      'td',
-	      null,
-	      props.tdsGivenUp
-	    )
-	  );
-	};
-
-/***/ },
-/* 317 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _axios = __webpack_require__(274);
-
-	var _axios2 = _interopRequireDefault(_axios);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var CreateGame = function (_Component) {
-	  _inherits(CreateGame, _Component);
-
-	  function CreateGame() {
-	    _classCallCheck(this, CreateGame);
-
-	    var _this = _possibleConstructorReturn(this, (CreateGame.__proto__ || Object.getPrototypeOf(CreateGame)).call(this));
-
-	    _this.state = {
-	      opponent: '',
-	      targets: '',
-	      completionsAllowed: '',
-	      yardsAllowed: '',
-	      tdsGivenUp: ''
-	    };
-	    _this.handleOpponentChange = _this.handleOpponentChange.bind(_this);
-	    _this.handleTargetsChange = _this.handleTargetsChange.bind(_this);
-	    _this.handleCompletionsAllowedChange = _this.handleCompletionsAllowedChange.bind(_this);
-	    _this.handleYardsAllowedChange = _this.handleYardsAllowedChange.bind(_this);
-	    _this.handleTDsGivenUpChange = _this.handleTDsGivenUpChange.bind(_this);
-	    _this.handleClick = _this.handleClick.bind(_this);
-	    return _this;
-	  }
-
-	  _createClass(CreateGame, [{
-	    key: 'handleOpponentChange',
-	    value: function handleOpponentChange(e) {
-	      this.setState({
-	        opponent: e.target.value
-	      });
-	    }
-	  }, {
-	    key: 'handleTargetsChange',
-	    value: function handleTargetsChange(e) {
-	      this.setState({
-	        targets: e.target.value
-	      });
-	    }
-	  }, {
-	    key: 'handleCompletionsAllowedChange',
-	    value: function handleCompletionsAllowedChange(e) {
-	      this.setState({
-	        completionsAllowed: e.target.value
-	      });
-	    }
-	  }, {
-	    key: 'handleYardsAllowedChange',
-	    value: function handleYardsAllowedChange(e) {
-	      this.setState({
-	        yardsAllowed: e.target.value
-	      });
-	    }
-	  }, {
-	    key: 'handleTDsGivenUpChange',
-	    value: function handleTDsGivenUpChange(e) {
-	      this.setState({
-	        tdsGivenUp: e.target.value
-	      });
-	    }
-	  }, {
-	    key: 'handleClick',
-	    value: function handleClick(e) {
-	      e.preventDefault();
-	      console.log('this.state: ', this.state);
-	      (0, _axios2.default)({
-	        method: 'post',
-	        url: '/create-game',
-	        data: {
-	          opponent: this.state.opponent,
-	          targets: this.state.targets,
-	          completionsAllowed: this.state.completionsAllowed,
-	          yardsAllowed: this.state.yardsAllowed,
-	          tdsGivenUp: this.state.tdsGiven
-	        } }).then(function (res) {
-	        console.log('res', res);
-	      }).catch(function (err) {
-	        console.log('err:', err);
-	      });
-	      //this.setState({ username: '', password: '' });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement('input', { type: 'text', placeholder: 'Opponent', value: this.state.opponent, onChange: this.handleOpponentChange, className: 'opponentInput' }),
-	        _react2.default.createElement('input', { type: 'text', placeholder: 'Targets', value: this.state.targets, onChange: this.handleTargetsChange, className: 'targetsInput' }),
-	        _react2.default.createElement('input', { type: 'text', placeholder: 'Completions Allowed', value: this.state.completionsAllowed, onChange: this.handleCompletionsAllowedChange, className: 'completionsAllowedInput' }),
-	        _react2.default.createElement('input', { type: 'text', placeholder: 'Yards Allowed', value: this.state.yardsAllowed, onChange: this.handleYardsAllowedChange, className: 'YardsAllowedInput' }),
-	        _react2.default.createElement('input', { type: 'text', placeholder: 'TDs Given Up', value: this.state.tdsGivenUp, onChange: this.handleTDsGivenUpChange, className: 'TDsGivenUpInput' }),
-	        _react2.default.createElement(
-	          'button',
-	          { type: 'button', className: 'createGameBtn', onClick: this.handleClick },
-	          "Add Game"
-	        )
-	      );
-	    }
-	  }]);
-
-	  return CreateGame;
-	}(_react.Component);
-
-	exports.default = CreateGame;
-
-/***/ },
-/* 318 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32823,7 +32517,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 319 */
+/* 316 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32834,11 +32528,11 @@
 
 	var _redux = __webpack_require__(247);
 
-	var _reduxThunk = __webpack_require__(318);
+	var _reduxThunk = __webpack_require__(315);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _rootReducer = __webpack_require__(320);
+	var _rootReducer = __webpack_require__(317);
 
 	var _rootReducer2 = _interopRequireDefault(_rootReducer);
 
@@ -32849,7 +32543,7 @@
 	exports.default = store;
 
 /***/ },
-/* 320 */
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32858,15 +32552,15 @@
 	  value: true
 	});
 
-	var _login = __webpack_require__(321);
+	var _login = __webpack_require__(318);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _logout = __webpack_require__(322);
+	var _logout = __webpack_require__(319);
 
 	var _logout2 = _interopRequireDefault(_logout);
 
-	var _signup = __webpack_require__(323);
+	var _signup = __webpack_require__(320);
 
 	var _signup2 = _interopRequireDefault(_signup);
 
@@ -32888,7 +32582,7 @@
 	exports.default = rootReducer;
 
 /***/ },
-/* 321 */
+/* 318 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32932,7 +32626,7 @@
 	}
 
 /***/ },
-/* 322 */
+/* 319 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32967,7 +32661,7 @@
 	}
 
 /***/ },
-/* 323 */
+/* 320 */
 /***/ function(module, exports) {
 
 	'use strict';

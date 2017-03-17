@@ -6,6 +6,7 @@ export default class Signup extends Component {
     return (
       <div>
         <h1>Sign Up!</h1>
+
         <SignupFormContainer />
       </div>
     );

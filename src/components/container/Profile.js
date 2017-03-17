@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 import gravatar from 'gravatar';
-import StatTable from './StatTable';
 import axios from 'axios';
 
 //import refreshSession from './../actions/refreshSession';
@@ -91,9 +90,8 @@ export default class Profile extends Component {
     return (
       <div>
         Profile
-        <p>User Id: {this.state.userid}</p>
+        <p>Username: {this.props.params.username}</p>
         <img src={this.state.profilePhotoLink} />
-        <StatTable statsPerGame={this.state.statsPerGame}/>
       </div>
     )
   }
