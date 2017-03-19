@@ -57,22 +57,58 @@ app.get('/check-session', (req, res) => {
   });
 });
 
-app.get('/player-stats', (req, res) => {
- 
-  console.log('REQ TO DATABASE', req);
-  Game.findAll({
-      where: {
-        userId: null
-      }
-    })
-    .then((result) => {
-      console.log('result for Game.findOne:', result);
-      //this.setState({ statsPerGame: result });
-      res.send(result); //return res.send(result);
-    });
-
-    //res.end();
+app.get('/query', (req, res) => {     //this is fired from React on a regular interval, returns the
+  let a = req.headers['username'];    //db table matching the logged in users username 
+  db.query("SELECT * FROM " + a + "s", { type: db.QueryTypes.SELECT})
+      .then(function(users) {
+      res.json(users);
+      })
 });
+
+
+
+app.post('/setdata', function(req, res) {
+  let action = req.body.Command.toUpperCase();  // grab the type of command from the incoming request
+  let user = req.body.User;                     // grab the username from the incoming request
+  console.log('I POSTED TOO!');
+  if (!user) {
+    res.send('No User ERROR')                    //if there is no user something is fucked up
+  }
+  let userTable;                              
+  switch(action){                                 //act according to the command that was given
+
+    case 'WRITE':
+      let data = parse(req.body.body);                //parse (defined below) returns a Sequelize Model Object with the same keys and sequelize dataType values (eg {name: 'mike'} => {name: Sequelize.STRING})
+      userTable = db.define(user, data)        //creates a table called the user's username using the Model created in the previous line of code
+      // console.log(data);
+      db.sync({ force: false }).then(function () {   
+        return userTable.create(JSON.parse(req.body.body));  //places table in db and then creates a new entry in the table with user submitted data
+      });
+
+      break;
+
+    case 'READ':          
+      db.query("SELECT * FROM " + user + "s", { type: db.QueryTypes.SELECT})
+      .then(function(users) {
+      res.send(users);                //returns the entire table matching the user's username
+      })
+
+      break;
+
+    default: 
+
+    res.send('Invalid Command');    //if command not found return error message
+
+  }
+
+});
+
+
+
+
+
+
+
 
 app.get('*', (req, res) => {
   //console.log('REQ URL:',req.url);
