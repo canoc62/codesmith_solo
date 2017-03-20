@@ -34,6 +34,9 @@ const User = db.define('user', {
   },
   password: {
     type: Sequelize.STRING
+  },
+  token: {
+    type: Sequelize.STRING
   }
 }
 // , {

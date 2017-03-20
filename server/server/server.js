@@ -17,6 +17,7 @@ const moment = require('moment');
 
 const createToken = require('./util/createToken');
 const expireTime = moment().unix() + 20; //expire in 20 seconds for testing
+const parse = require('./util/parse');
 
 app.use(session({
   secret: 'secret',
@@ -65,8 +66,6 @@ app.get('/query', (req, res) => {     //this is fired from React on a regular in
       })
 });
 
-
-
 app.post('/setdata', function(req, res) {
   let action = req.body.Command.toUpperCase();  // grab the type of command from the incoming request
   let user = req.body.User;                     // grab the username from the incoming request
@@ -102,13 +101,6 @@ app.post('/setdata', function(req, res) {
   }
 
 });
-
-
-
-
-
-
-
 
 app.get('*', (req, res) => {
   //console.log('REQ URL:',req.url);
@@ -173,23 +165,6 @@ app.post('/signup', (req, res) => {
     User.create(testData).then((data) => {
      
       res.json(data);
-    });
-  });
-});
-
-app.post('/create-game', (req, res) => {
-
-  Game.sync().then(() => {
-    const gameData = {
-      opponent: req.body.opponent,
-      targets: req.body.targets,
-      completionsAllowed: req.body.completionsAllowed,
-      yardsAllowed: req.body.yardsAllowed,
-      tdsGivenUp: req.body.tdsGivenUp
-    }
-
-    Game.create(gameData).then((data) => {
-      console.dir(data.get());
     });
   });
 });
