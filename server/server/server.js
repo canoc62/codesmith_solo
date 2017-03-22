@@ -16,7 +16,7 @@ const bcrypt = require('bcryptjs');
 const moment = require('moment');
 
 const createToken = require('./util/createToken');
-const expireTime = moment().unix() + 20; //expire in 20 seconds for testing
+const expireTime = moment().unix() + 30; //expire in 20 seconds for testing
 const parse = require('./util/parse');
 
 app.use(session({
