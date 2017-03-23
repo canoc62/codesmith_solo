@@ -46,9 +46,10 @@ export default class Profile extends Component {
        fetch('/check-session', {
         method: 'post',
         headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(sessionData)
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + sessionData
+        }
+        ,body: JSON.stringify(sessionData)
       })
         .then((response) => {
           if (response.status !== 200) {

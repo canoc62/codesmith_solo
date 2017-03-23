@@ -16,7 +16,7 @@ const bcrypt = require('bcryptjs');
 const moment = require('moment');
 
 const createToken = require('./util/createToken');
-const expireTime = moment().unix() + 30; //expire in 20 seconds for testing
+const expireTime = moment().unix() + 20; //expire in 20 seconds for testing
 const parse = require('./util/parse');
 
 app.use(session({
@@ -37,10 +37,12 @@ let sess;
 app.post('/check-session', (req, res) => {
 
   console.log('CHECK-SESSION req.body', req.body);
-  const sessionToken = req.body.sessionToken;
+ const sessionToken = req.body.sessionToken;
+console.log('REQ HEADERS:', req.headers);
+ console.log('CHECK-SESSION req.body', req.headers.authorization);
 
   redisClient.get(req.body.sessionUsername, (err, reply) => {
-
+  //redisClient.get(req.authorization.sessionUsername, (err, reply) => {
     console.log('REPLY from REDIS session query:', reply);
     if (err) {
       console.log('redisClient error:', err);

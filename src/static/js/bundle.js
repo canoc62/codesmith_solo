@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "bf6ea7027f6af364e692"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c357b965f2057b71b647"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -30988,7 +30988,7 @@
 	        console.log('ERRROORRR not 200, it is:', response.status);
 	        throw new Error(response.statusText);
 	      }
-
+	      console.log('response:', response);
 	      return response.json();
 	    }).then(function (data) {
 	      console.log('HELLLo before going to profile, show data:', data);
@@ -31910,11 +31910,12 @@
 	      //     });
 	      // }
 	      else {
-	          console.log('about to fetch!'); // FETCH NOT WORKING? TO CHECK IF SESSION IS VALLID BY CHECKING FOR TOKEN MATCH AGAINST REDIS
+	          console.log('about to fetch, session data', sessionData); // FETCH NOT WORKING? TO CHECK IF SESSION IS VALLID BY CHECKING FOR TOKEN MATCH AGAINST REDIS
 	          fetch('/check-session', {
 	            method: 'post',
 	            headers: {
-	              'Content-Type': 'application/json'
+	              'Content-Type': 'application/json',
+	              'Authorization': 'Bearer ' + sessionData
 	            },
 	            body: JSON.stringify(sessionData)
 	          }).then(function (response) {
