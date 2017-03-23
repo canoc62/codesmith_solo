@@ -34,7 +34,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 let sess;
 
-app.get('/check-session', (req, res) => {
+app.post('/check-session', (req, res) => {
 
   console.log('CHECK-SESSION req.body', req.body);
   const sessionToken = req.body.sessionToken;
@@ -50,9 +50,11 @@ app.get('/check-session', (req, res) => {
       // if the token of the give username (key) in redis matches the 
       // session token sent in the request body, session is good.
       if (reply === sessionToken) {
-        res.status(200).end();
+        console.log('sesssionn matches yo');
+        res.status(200).json({});
       } else {
-        res.status(401).end();
+        console.log('sessssio does not match yo');
+        res.status(401).json({});
       }
     }
   });
@@ -112,11 +114,12 @@ app.get('*', (req, res) => {
 app.post('/login', (req, res) => {
   console.log('req: ', req.body);
   const username = req.body.username;
+  const queryObj = {
+    username
+  }
 
   User.findOne({
-    where: {
-      username
-    }
+    where: queryObj
   })
   .then((result) => {
     console.log('result for User.findOne:', result.dataValues);
@@ -131,13 +134,15 @@ app.post('/login', (req, res) => {
 
         // Create session token, save in redis
         const token = createToken(username);
+        console.log('sessinnn token',token);
         redisClient.set(username, token, (err, reply) => {
           
           if (err) {
-            res.status(500).send();
-          }
-
-          if (reply) {
+            console.log('redis set error', err);
+            return res.status(500).send();
+          } else if (reply) {
+            console.log('there is a reply forcomparing bcrypted pw', reply);
+            console.log('REDIS CLIENT GET UN', redisClient.get(username));
             redisClient.expireat(username, expireTime);
             res.json({ username, token });
           } else {
@@ -147,7 +152,8 @@ app.post('/login', (req, res) => {
         //res.send(result);
       }
     });
-  }).catch(()=>{
+  }).catch((err) => {
+    console.log('username query error:', err);
     res.sendStatus(401);
   });
   //res.end();

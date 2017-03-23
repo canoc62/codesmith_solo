@@ -42,9 +42,9 @@ export default class Profile extends Component {
     //     });
     // }
     else {
-      console.log('about to fetch!'); // FETCH NOT WORKING? TO CHECK IF SESSION IS VALLID BY CHECKING FOR TOKEN MATCH AGAINST REDIS
+      console.log('about to fetch, session data', sessionData); // FETCH NOT WORKING? TO CHECK IF SESSION IS VALLID BY CHECKING FOR TOKEN MATCH AGAINST REDIS
        fetch('/check-session', {
-        method: 'get',
+        method: 'post',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -76,7 +76,7 @@ export default class Profile extends Component {
           //   });
         })
         .catch((error) => {
-          // console.log('SIGNUP FAIL error:', error);
+          console.log('SIGNUP FAIL error:', error);
           // dispatch(signupFail());
           console.log('Session fail, back to home page!');
           browserHistory.push('/');

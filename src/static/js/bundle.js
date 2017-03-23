@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "9a31b7232ea5c29bc2f7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "bf6ea7027f6af364e692"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -30985,7 +30985,7 @@
 	      body: JSON.stringify(userData)
 	    }).then(function (response) {
 	      if (response.status !== 200) {
-	        console.log('ERRROORRR not 200');
+	        console.log('ERRROORRR not 200, it is:', response.status);
 	        throw new Error(response.statusText);
 	      }
 
@@ -31912,7 +31912,7 @@
 	      else {
 	          console.log('about to fetch!'); // FETCH NOT WORKING? TO CHECK IF SESSION IS VALLID BY CHECKING FOR TOKEN MATCH AGAINST REDIS
 	          fetch('/check-session', {
-	            method: 'get',
+	            method: 'post',
 	            headers: {
 	              'Content-Type': 'application/json'
 	            },
@@ -31940,7 +31940,7 @@
 	            //     this.setState({ statsPerGame: response })
 	            //   });
 	          }).catch(function (error) {
-	            // console.log('SIGNUP FAIL error:', error);
+	            console.log('SIGNUP FAIL error:', error);
 	            // dispatch(signupFail());
 	            console.log('Session fail, back to home page!');
 	            _reactRouter.browserHistory.push('/');

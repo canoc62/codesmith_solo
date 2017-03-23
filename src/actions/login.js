@@ -36,10 +36,10 @@ export default function login(userData) {
     })
       .then((response) => {
         if (response.status !== 200) {
-          console.log('ERRROORRR not 200');
+          console.log('ERRROORRR not 200, it is:', response.status);
           throw new Error(response.statusText);
         }
-        
+        console.log('response:', response);
         return response.json();
       })
       .then((data) => {
