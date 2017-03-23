@@ -44,12 +44,12 @@ export default class Profile extends Component {
     else {
       console.log('about to fetch, session data', sessionData); // FETCH NOT WORKING? TO CHECK IF SESSION IS VALLID BY CHECKING FOR TOKEN MATCH AGAINST REDIS
        fetch('/check-session', {
-        method: 'post',
+        method: 'get',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + sessionData
         }
-        ,body: JSON.stringify(sessionData)
+        //,body: JSON.stringify(sessionData)
       })
         .then((response) => {
           if (response.status !== 200) {
