@@ -39,10 +39,13 @@ app.post('/check-session', (req, res) => {
   console.log('CHECK-SESSION req.body', req.body);
  const sessionToken = req.body.sessionToken;
 console.log('REQ HEADERS:', req.headers);
- console.log('CHECK-SESSION req.body', req.headers.authorization);
+ console.log('CHECK-SESSION req.headers.authorization', req.headers.authorization);
+ console.log('CHECK-SESSION req.headers.authorization.jwt token', req.headers.authorization);
 
   redisClient.get(req.body.sessionUsername, (err, reply) => {
-  //redisClient.get(req.authorization.sessionUsername, (err, reply) => {
+  //redisClient.get(req.authorization.username of token?, (err, reply) => {
+    // NEED TO FIGURE OUT A WAY TO READ USERNAME FROM JWT IN REQ HEADERS TO QUERY FOR THAT USERNAME
+    // IN REDIS DB
     console.log('REPLY from REDIS session query:', reply);
     if (err) {
       console.log('redisClient error:', err);

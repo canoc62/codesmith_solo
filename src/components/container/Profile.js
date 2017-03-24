@@ -47,7 +47,7 @@ export default class Profile extends Component {
         method: 'get',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + sessionData
+          'Authorization': 'Bearer ' + sessionToken
         }
         //,body: JSON.stringify(sessionData)
       })

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c357b965f2057b71b647"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c87167dc0b27404e51e8"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -31912,12 +31912,12 @@
 	      else {
 	          console.log('about to fetch, session data', sessionData); // FETCH NOT WORKING? TO CHECK IF SESSION IS VALLID BY CHECKING FOR TOKEN MATCH AGAINST REDIS
 	          fetch('/check-session', {
-	            method: 'post',
+	            method: 'get',
 	            headers: {
 	              'Content-Type': 'application/json',
-	              'Authorization': 'Bearer ' + sessionData
-	            },
-	            body: JSON.stringify(sessionData)
+	              'Authorization': 'Bearer ' + sessionToken
+	            }
+	            //,body: JSON.stringify(sessionData)
 	          }).then(function (response) {
 	            if (response.status !== 200) {
 	              console.log('FETCH ERROR from PROFILE component!');
