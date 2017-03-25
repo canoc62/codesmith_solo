@@ -7,9 +7,9 @@ function loginAttempt() {
   }
 }
 
-function loginSuccess(token, username) {
-  localStorage.setItem('solo_project_user_token', token);
-  localStorage.setItem('solo_project_username', username);
+function loginSuccess(token) {
+  localStorage.setItem('devBase_user_token', token);
+  //localStorage.setItem('solo_project_username', username);
   console.log("LOCAL STORAGE:", localStorage);
   return {
     type: 'LOGIN_SUCCESS'
@@ -44,8 +44,8 @@ export default function login(userData) {
       })
       .then((data) => {
         console.log('HELLLo before going to profile, show data:', data);
-        console.log('HEEELOOOOO', data.username);
-        dispatch(loginSuccess(data.token, data.username));
+        //console.log('HEEELOOOOO', data.username);
+        dispatch(loginSuccess(data.token));
         browserHistory.push('/profile/' + data.username);
         console.log('Browser pushed to profile!!!');
       })

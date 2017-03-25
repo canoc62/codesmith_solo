@@ -13,6 +13,8 @@ const redisStore = require('connect-redis')(session);
 const redisClient = redis.createClient();
 
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const secret_key = 'secret_key';
 const moment = require('moment');
 
 const createToken = require('./util/createToken');
@@ -34,35 +36,72 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 let sess;
 
-app.post('/check-session', (req, res) => {
+app.get('/check-session', (req, res) => {
 
-  console.log('CHECK-SESSION req.body', req.body);
- const sessionToken = req.body.sessionToken;
-console.log('REQ HEADERS:', req.headers);
+  
+  //console.log('CHECK-SESSION req.body', req.body);
+ //const sessionToken = req.body.sessionToken;
+ console.log('REQ HEADERS:', req.headers);
  console.log('CHECK-SESSION req.headers.authorization', req.headers.authorization);
- console.log('CHECK-SESSION req.headers.authorization.jwt token', req.headers.authorization);
+ //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaHJpcyI6MSwiaWF0IjoxNDkwNDM0MDk0fQ.7in_o64sniV5x-4zUMiXLUn3-EM_FwYZFy_rQC11hHc
 
-  redisClient.get(req.body.sessionUsername, (err, reply) => {
+ jwt.verify(req.headers.authorization.slice(7), secret_key, (err, result) => {
+  if (err) {
+    console.log('JWT VERIFY ERROR', err);
+    return res.status(401).end();
+  }
+
+  if (result) {
+    console.log('result', result);
+    console.log('result.jwt_username', result.jwt_username);
+    redisClient.get(result.jwt_username, (err, reply) => {
   //redisClient.get(req.authorization.username of token?, (err, reply) => {
     // NEED TO FIGURE OUT A WAY TO READ USERNAME FROM JWT IN REQ HEADERS TO QUERY FOR THAT USERNAME
     // IN REDIS DB
     console.log('REPLY from REDIS session query:', reply);
-    if (err) {
-      console.log('redisClient error:', err);
-      res.status(401).end();
-    } else {
-
-      // if the token of the give username (key) in redis matches the 
-      // session token sent in the request body, session is good.
-      if (reply === sessionToken) {
-        console.log('sesssionn matches yo');
-        res.status(200).json({});
+      if (err) {
+        console.log('redisClient error:', err);
+        res.status(401).end();
       } else {
-        console.log('sessssio does not match yo');
-        res.status(401).json({});
+
+        // if the token of the give username (key) in redis matches the 
+        // session token sent in the request body, session is good.
+        //if (reply === sessionToken) {
+        if (reply === result.jwt_user_id) {
+          console.log('sesssionn matches yo');
+          res.status(200).json({});
+        } else {
+          console.log('sessssio does not match yo');
+          res.status(401).json({});
+        }
       }
-    }
-  });
+    });
+  } else {
+    res.status(401).json({});
+  }
+ });
+
+  // redisClient.get(req.body.sessionUsername, (err, reply) => {
+  // //redisClient.get(req.authorization.username of token?, (err, reply) => {
+  //   // NEED TO FIGURE OUT A WAY TO READ USERNAME FROM JWT IN REQ HEADERS TO QUERY FOR THAT USERNAME
+  //   // IN REDIS DB
+  //   console.log('REPLY from REDIS session query:', reply);
+  //   if (err) {
+  //     console.log('redisClient error:', err);
+  //     res.status(401).end();
+  //   } else {
+
+  //     // if the token of the give username (key) in redis matches the 
+  //     // session token sent in the request body, session is good.
+  //     if (reply === sessionToken) {
+  //       console.log('sesssionn matches yo');
+  //       res.status(200).json({});
+  //     } else {
+  //       console.log('sessssio does not match yo');
+  //       res.status(401).json({});
+  //     }
+  //   }
+  // });
 });
 
 app.get('/query', (req, res) => {     //this is fired from React on a regular interval, returns the
@@ -122,13 +161,14 @@ app.post('/login', (req, res) => {
   const queryObj = {
     username
   }
+  let userId;
 
   User.findOne({
     where: queryObj
   })
   .then((result) => {
     console.log('result for User.findOne:', result.dataValues);
-
+    userId = result.dataValues.id;
     bcrypt.compare(req.body.password, result.dataValues.password, (err, result) => {
       if (err) {
         console.log('compare ERR:', err);
@@ -138,7 +178,7 @@ app.post('/login', (req, res) => {
         console.log('compare RESULT:', result);
 
         // Create session token, save in redis
-        const token = createToken(username);
+        const token = createToken(username, userId);
         console.log('sessinnn token',token);
         redisClient.set(username, token, (err, reply) => {
           

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c87167dc0b27404e51e8"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7fc76d98cbab4c90c1c4"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -30957,9 +30957,9 @@
 	  };
 	}
 
-	function loginSuccess(token, username) {
-	  localStorage.setItem('solo_project_user_token', token);
-	  localStorage.setItem('solo_project_username', username);
+	function loginSuccess(token) {
+	  localStorage.setItem('devBase_user_token', token);
+	  //localStorage.setItem('solo_project_username', username);
 	  console.log("LOCAL STORAGE:", localStorage);
 	  return {
 	    type: 'LOGIN_SUCCESS'
@@ -30992,8 +30992,8 @@
 	      return response.json();
 	    }).then(function (data) {
 	      console.log('HELLLo before going to profile, show data:', data);
-	      console.log('HEEELOOOOO', data.username);
-	      dispatch(loginSuccess(data.token, data.username));
+	      //console.log('HEEELOOOOO', data.username);
+	      dispatch(loginSuccess(data.token));
 	      _reactRouter.browserHistory.push('/profile/' + data.username);
 	      console.log('Browser pushed to profile!!!');
 	    }).catch(function (error) {
@@ -31885,15 +31885,12 @@
 	    value: function componentDidMount() {
 	      var _this2 = this;
 
-	      console.log('PROPS PARAMS:', this.props.params);
-	      console.log('LOCAL STORAGE FROM PROFILE:', localStorage);
-	      console.log('local storage solo_project_user_token:', localStorage.getItem('solo_project_user_token'));
-	      var sessionToken = localStorage.getItem('solo_project_user_token');
-	      var sessionUsername = this.props.params.username;
-	      var sessionData = {
-	        sessionUsername: sessionUsername,
-	        sessionToken: sessionToken
-	      };
+	      var sessionToken = localStorage.getItem('devBase_user_token');
+	      // const sessionUsername = this.props.params.username;
+	      // const sessionData = { 
+	      //   sessionUsername: sessionUsername,
+	      //   sessionToken: sessionToken
+	      // };
 
 	      if (!sessionToken) {
 	        console.log('Pushing back to home!');
@@ -31910,11 +31907,11 @@
 	      //     });
 	      // }
 	      else {
-	          console.log('about to fetch, session data', sessionData); // FETCH NOT WORKING? TO CHECK IF SESSION IS VALLID BY CHECKING FOR TOKEN MATCH AGAINST REDIS
+	          console.log('about to fetch, session data', sessionToken);
 	          fetch('/check-session', {
 	            method: 'get',
 	            headers: {
-	              'Content-Type': 'application/json',
+	              // 'Content-Type': 'application/json',
 	              'Authorization': 'Bearer ' + sessionToken
 	            }
 	            //,body: JSON.stringify(sessionData)

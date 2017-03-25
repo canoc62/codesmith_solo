@@ -17,15 +17,12 @@ export default class Profile extends Component {
   }
   componentDidMount() {
 
-    console.log('PROPS PARAMS:', this.props.params);
-    console.log('LOCAL STORAGE FROM PROFILE:', localStorage);
-    console.log('local storage solo_project_user_token:', localStorage.getItem('solo_project_user_token'));
-    const sessionToken = localStorage.getItem('solo_project_user_token');
-    const sessionUsername = this.props.params.username;
-    const sessionData = { 
-      sessionUsername: sessionUsername,
-      sessionToken: sessionToken
-    };
+    const sessionToken = localStorage.getItem('devBase_user_token');
+    // const sessionUsername = this.props.params.username;
+    // const sessionData = { 
+    //   sessionUsername: sessionUsername,
+    //   sessionToken: sessionToken
+    // };
 
     if (!sessionToken) {
       console.log('Pushing back to home!');
@@ -42,11 +39,11 @@ export default class Profile extends Component {
     //     });
     // }
     else {
-      console.log('about to fetch, session data', sessionData); // FETCH NOT WORKING? TO CHECK IF SESSION IS VALLID BY CHECKING FOR TOKEN MATCH AGAINST REDIS
+      console.log('about to fetch, session data', sessionToken);
        fetch('/check-session', {
         method: 'get',
         headers: {
-          'Content-Type': 'application/json',
+          // 'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + sessionToken
         }
         //,body: JSON.stringify(sessionData)
