@@ -52,7 +52,7 @@ app.get('/check-session', (req, res) => {
   }
 
   if (result) {
-    console.log('result', result);
+    console.log('jwt verification result', result);
     console.log('result.jwt_username', result.jwt_username);
     redisClient.get(result.jwt_username, (err, reply) => {
   //redisClient.get(req.authorization.username of token?, (err, reply) => {
@@ -67,7 +67,9 @@ app.get('/check-session', (req, res) => {
         // if the token of the give username (key) in redis matches the 
         // session token sent in the request body, session is good.
         //if (reply === sessionToken) {
-        if (reply === result.jwt_user_id) {
+        //if (reply === result.jwt_user_id) {
+          //console.log('reply:', reply);
+        if (reply === req.headers.authorization.slice(7)) {
           console.log('sesssionn matches yo');
           res.status(200).json({});
         } else {
