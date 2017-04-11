@@ -1,5 +1,5 @@
 .vscode
 node_modules
-src/static/js
+src/static/js/
 dump.rdb
 npm-debug.log

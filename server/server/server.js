@@ -139,7 +139,7 @@ app.post('/login', (req, res) => {
 
         // Create session token, save in redis
         const token = createToken(username);
-        console.log('sessinnn token',token);
+        console.log('sessinnn token created',token);
         redisClient.set(username, token, (err, reply) => {
           
           if (err) {
