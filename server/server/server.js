@@ -180,8 +180,8 @@ app.post('/login', (req, res) => {
         console.log('compare RESULT:', result);
 
         // Create session token, save in redis
-        const token = createToken(username, userId);
-        console.log('sessinnn token',token);
+        const token = createToken(username);
+        console.log('sessinnn token created',token);
         redisClient.set(username, token, (err, reply) => {
           
           if (err) {

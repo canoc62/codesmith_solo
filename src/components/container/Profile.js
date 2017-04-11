@@ -54,8 +54,9 @@ export default class Profile extends Component {
             throw new Error(response.statusText);
           }
 
-          console.log( 'before FETCH return from PROFILE component!');
-          return response.json();
+          console.log( 'before FETCH return from PROFILE component!', response.json());
+          //return response.json();
+          return response;
         })
         .then((data) => {
           // console.log('SIGNUP SUCCESS, show data:', data);
@@ -74,7 +75,7 @@ export default class Profile extends Component {
           //   });
         })
         .catch((error) => {
-          console.log('SIGNUP FAIL error:', error);
+          console.log('LOGIN SESSION FAIL error:', error);
           // dispatch(signupFail());
           console.log('Session fail, back to home page!');
           browserHistory.push('/');
