@@ -51,7 +51,7 @@ export default function login(userData) {
       })
       .catch((error) => {
         console.log('Hello fail!');
-        console.log('Error:', error);
+        console.log('Login Error:', error);
         dispatch(loginFail());
       });
   }
