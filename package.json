@@ -39,11 +39,12 @@
   },
   "devDependencies": {
     "babel-loader": "^6.2.10",
-    "nodemon": "^1.11.0",
-    "webpack": "^1.14.0",
-    "webpack-dev-server": "^1.16.2",
-    "mocha": "^3.2.0",
     "chai": "^3.5.0",
-    "enzyme": "^2.7.1"
+    "enzyme": "^2.7.1",
+    "mocha": "^3.2.0",
+    "nodemon": "^1.11.0",
+    "supertest": "^3.0.0",
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.16.2"
   }
 }
