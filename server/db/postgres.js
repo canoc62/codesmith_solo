@@ -69,32 +69,6 @@ User.beforeCreate(function(user, options, callback) {
   });
 });
 
-const Game = db.define('game', {
-  id: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement : true
-  },
-  opponent: {
-    type: Sequelize.STRING
-  },
-  targets: {
-    type: Sequelize.INTEGER
-  },
-  completionsAllowed: {
-    type: Sequelize.INTEGER
-  },
-  yardsAllowed: {
-    type: Sequelize.INTEGER
-  },
-  tdsGivenUp: {
-    type: Sequelize.INTEGER
-  }
-});
-
-User.hasMany(Game, {as: 'Game'});
-
 module.exports = {
-  User: User,
-  Game: Game
+  User: User
 }
