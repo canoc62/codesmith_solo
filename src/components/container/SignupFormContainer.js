@@ -1,11 +1,10 @@
 import React,  { Component } from 'react';
-import { connect } from 'react-redux';
 import SignupForm from './../presentational/SignupForm';
 import PasswordMismatch from './../presentational/PasswordMismatch';
 
 import signup from './../../actions/signup';
 
-class SignupFormContainer extends Component {
+export default class SignupFormContainer extends Component {
   constructor() {
     super();
 
@@ -106,5 +105,3 @@ class SignupFormContainer extends Component {
     }
   }
 }
-
-export default connect()(SignupFormContainer);

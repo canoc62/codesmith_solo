@@ -1,11 +1,10 @@
 import React,  { Component } from 'react';
-import { connect } from 'react-redux';
 import axios from 'axios';
 import LoginForm from './../presentational/LoginForm';
 
 import login from './../../actions/login';
 
-class LoginFormContainer extends Component {
+export default class LoginFormContainer extends Component {
   constructor() {
     super();
 
@@ -67,5 +66,3 @@ class LoginFormContainer extends Component {
     )
   }
 }
-
-export default connect()(LoginFormContainer);
